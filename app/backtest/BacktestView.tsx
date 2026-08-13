@@ -194,7 +194,7 @@ export default function BacktestView({ initial }: { initial: Backtest }) {
             of each month and each month graded retrospectively at closing consensus prices.
             This is how the strategy was built, not a record of money wagered. The live record
             is on{" "}
-            <a href="/" style={{ textDecoration: "underline" }}>
+            <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/"} style={{ textDecoration: "underline" }}>
               The Ledger
             </a>
             .

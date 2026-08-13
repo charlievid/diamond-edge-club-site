@@ -24,7 +24,8 @@ export function useLive<T>(initial: T, url: string): { data: T; live: boolean } 
 
   useEffect(() => {
     let cancelled = false;
-    fetch(url, { cache: "no-store" })
+    const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+    fetch(base + url, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((fresh) => {
         if (cancelled || !fresh) return;
