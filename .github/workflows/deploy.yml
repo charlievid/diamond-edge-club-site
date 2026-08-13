@@ -1,0 +1,63 @@
+name: deploy
+
+# Publishes the Diamond Edge Club site to GitHub Pages.
+#
+# This workflow lives in the SITE repo (charlievid/diamond-edge-club-site),
+# where the Next.js app is the repository root. It is pushed there from the
+# private research repo with `git subtree push --prefix web`.
+#
+# The split exists so the site can be public - which GitHub Pages requires on a
+# free plan - WITHOUT publishing model_lab.md and the rest of the research.
+# Only what the site needs crosses the boundary.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx next build
+
+      - name: Fail if a secret reached the build
+        run: |
+          # The published output is world-readable permanently, so this is
+          # worth two seconds on every deploy.
+          if grep -rlqiE "ODDS_API_KEY|apiKey=|ntfy\.sh/" out/ 2>/dev/null; then
+            echo "::error::a key or endpoint appears in out/ - refusing to publish"
+            exit 1
+          fi
+          echo "secret scan clean"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
