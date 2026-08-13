@@ -34,7 +34,7 @@ function MonthBlock({ month, picks, open }: { month: string; picks: Pick[]; open
           </tr>
         </thead>
         <tbody>
-          {picks.map((p, i) => (
+          {[...picks].reverse().map((p, i) => (
             <tr key={`${p.date}-${p.matchup}-${i}`}>
               <td className="mono">{p.date}</td>
               <td>
@@ -94,12 +94,6 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
             {season.roi_pct !== null ? `${season.roi_pct > 0 ? "+" : ""}${season.roi_pct.toFixed(1)}%` : "—"}
           </div>
           <div className="l">roi</div>
-        </div>
-        <div className="stat">
-          <div className="v">
-            {liveTot.wins}–{liveTot.losses}
-          </div>
-          <div className="l">live · staked</div>
         </div>
       </div>
 
