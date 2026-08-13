@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-08-13T09:12:54+00:00",
+  "registration": {
+    "ref": "DEC-ML-003",
+    "status": "open",
+    "registered_at": "2026-08-12T07:57:54+00:00",
+    "rule": "FULL-GAME MONEYLINE. For every side of every game with a two-sided closing moneyline, compute a win probability from an L2 logistic regression (scikit-learn LogisticRegression, C=0.05, max_iter=3000) whose features are: (1) logit of the WORST-CASE de-vigged market fair probability, entered directly and unscaled, so the factors are only ever credited with what they add to the market line; plus (2) twenty standardised point-in-time factor edges, all oriented 'our side minus theirs' - eleven classic (sp_fip, sp_whip, bp_era, bp_whip, bp_fip, bp_fatigue, off, travel, rest, is_home, park_factor) and nine Statcast (sp_xwoba, sp_barrel, sp_hardhit, sp_whiff, sp_gb, off_xwoba, off_barrel, off_hardhit, off_whiff). Features are built by ml_features.py and ml_features_statcast.py, which compute every value from games STRICTLY BEFORE the game being priced. The model is REFIT ON THE FIRST OF EVERY MONTH on all prior seasons plus the current season to date, and is frozen for that month. Bet the side where model probability minus worst-case fair probability is largest. If no game clears the threshold, publish nothing. OPENING-MONTH EXCLUSION (the change from DEC-ML-002): NO BET IS PLACED IN THE FIRST CALENDAR MONTH OF ANY SEASON. Games through 30 April are used to accumulate season-to-date rates and are never bet. Rationale, as specified before any test was run: the features are season-to-date rates shrunk toward the prior season, so in April the model is largely pricing last year's rosters and cannot see injuries, trades or draft changes. Measured: April went 46-90 for -15.08% across 2023-2026 while the remaining months returned +6.36% on the same model.",
+    "threshold": "PRICE BAND: decimal odds >= 1.80 (American -125 or longer). NO UPPER CAP - the rule is explicitly permitted to bet underdogs of any length, and imposing a +130 ceiling was measured to destroy the edge (2025: -0.20% to -4.07% capped, vs +11.47% uncapped). EDGE THRESHOLD: not a fixed number. On each monthly refit the threshold is set by BISECTION ON THE FIT DATA ONLY so that the rule would have averaged 2.0 picks per day over that fit window, capped at 4 picks per day, with no minimum. Volume is the calibration target; profit is never used to set the threshold. DE-VIG: the fair probability is the LEAST FAVOURABLE (maximum) of proportional, power and Shin, on the six-book consensus. The threshold is still calibrated on the fit window only, and the fit window MAY include April games \u2014 excluding April governs which games are BET, not which are learned from. Discarding April from training would throw away information the model legitimately has.",
+    "stake_rule": "Flat 1 unit per pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing. Explicitly NO escalating unit ladder: the ladder was simulated on this project's own data and busted a $100 bankroll in July on a -4.63% strategy. Unit size may only change between graded samples, never inside one.",
+    "sample_size": "Graded over 600 bets OR 150 calendar days of BETTABLE season (May onward), WHICHEVER IS LATER. No profitability claim, no marketing of a record, and no paid picks product before that gate is met. PRE-COMMITTED FAILURE CONDITION, unchanged from DEC-ML-002: if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed \u2014 not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING: consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward and updated: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band was chosen on 2024 and validated on 2025 \u2014 one out-of-sample test deep, not many; (c) THE 2012-2021 TEST IS NEGATIVE: -3.67% over 2,536 bets, CI90 [-7.49, +0.08], 2 of 9 seasons positive. This is the largest sample any version has faced and it does not support the rule. It can only run the 11 classic factors because Statcast begins in 2021, so it cannot separate 'the approach fails in that era' from 'the approach needs Statcast'; the 11-vs-20-factor gap on recent seasons (+6.36% vs +14.64%) favours the second reading, but that is an interpretation, not a finding; (d) it carries a LOSING win-loss record and profits only because the average price is around +140 against a low-40s breakeven; (e) it contradicts the brand owner's stated +130 underdog ceiling; (f) 2022-2025 odds are a consensus archive, not a verified sharp close; (g) 2026 odds come from checkbestodds screenshots, book set unknown, measured hold ~6.0% vs 4.33% consensus, CLOSING-ONLY so no CLV is possible; (h) STATCAST IS UNAVAILABLE FOR 2026, so the registered 20-factor model CANNOT CURRENTLY BE RUN LIVE. Until Statcast is ingested, any 2026 result is the reduced 11-factor version, whose CI90 still includes zero."
+  },
+  "findings": [
+    {
+      "date": "2026-08-13",
+      "corrects": "known weakness (c)",
+      "title": "The 2012-2021 failure was not about missing Statcast",
+      "body": "Weakness (c) said the pre-2022 losses could not be separated into 'the approach fails in that era' versus 'the approach needs Statcast'. Statcast has since been backfilled to 2015 (4.5M pitches) and the question is answered: running the FULL 20-factor model on 2017-2021 returned +0.13% over 1,454 bets (CI90 -5.15% to +5.44%, margin -0.06 points). The 11-factor version scored +1.71% on the same window - marginally BETTER. Statcast did not rescue the old era. So roughly 4,000 bets before 2022 say nothing, while roughly 950 from 2023 on say a lot, and the honest reading is either that something about 2022-onward genuinely differs, or that the recent window is where the rule was searched and it is fitted to it. This is recorded rather than filed as a supersede because the RULE is unchanged; only a factual statement inside it is now answered."
+    }
+  ],
+  "gate": {
+    "bets_required": 600,
+    "days_required": 150,
+    "bets_graded": 0,
+    "days_elapsed": 0,
+    "met": false,
+    "claim_permitted": false
+  },
+  "summary": {
+    "published": 1,
+    "graded": 0,
+    "pending": 1,
+    "wins": 0,
+    "losses": 0,
+    "units": 0.0,
+    "roi_pct": null
+  },
+  "picks": [
+    {
+      "date": "2026-08-12",
+      "matchup": "PIT @ MIA",
+      "pick": "MIA",
+      "pick_full": "Miami Marlins",
+      "price": -114,
+      "decimal": 1.877,
+      "model_prob": 0.5668,
+      "market_prob": 0.5177,
+      "edge_pct": 4.91,
+      "published_at": "2026-08-12T15:19:10+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null
+    }
+  ]
+}
