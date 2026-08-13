@@ -7,6 +7,14 @@
  * failed, and none of that belongs behind a public endpoint.
  */
 
+export type SeasonTot = {
+  bets: number;
+  wins: number;
+  losses: number;
+  units: number;
+  roi_pct: number | null;
+};
+
 export type Pick = {
   date: string;
   matchup: string;
@@ -22,6 +30,8 @@ export type Pick = {
   won: boolean | null;
   score: string | null;
   profit_units: number | null;
+  /** true = scored after the fact, never staked. */
+  simulated: boolean;
 };
 
 export type Ledger = {
@@ -51,6 +61,9 @@ export type Ledger = {
     /** The site must not render a performance claim unless this is true. */
     claim_permitted: boolean;
   };
+  season: SeasonTot;
+  live: SeasonTot;
+  simulated_count: number;
   summary: {
     published: number;
     graded: number;
@@ -83,4 +96,31 @@ export function equityCurve(picks: Pick[]): { i: number; units: number }[] {
       out.push({ i: idx + 1, units: run });
     });
   return out;
+}
+
+/** Group settled picks by YYYY-MM, newest month first. */
+export function byMonth(picks: Pick[]): { month: string; picks: Pick[] }[] {
+  const m = new Map<string, Pick[]>();
+  picks.filter((p) => p.settled).forEach((p) => {
+    const k = p.date.slice(0, 7);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k)!.push(p);
+  });
+  return [...m.entries()]
+    .sort((a, b) => (a[0] < b[0] ? 1 : -1))
+    .map(([month, ps]) => ({ month, picks: ps }));
+}
+
+export function monthLabel(m: string): string {
+  const [y, mo] = m.split("-").map(Number);
+  return new Date(Date.UTC(y, mo - 1, 1)).toLocaleDateString("en-US", {
+    month: "long", year: "numeric", timeZone: "UTC",
+  });
+}
+
+export function totals(picks: Pick[]) {
+  const u = picks.reduce((a, p) => a + (p.profit_units ?? 0), 0);
+  const w = picks.filter((p) => p.won).length;
+  return { bets: picks.length, wins: w, losses: picks.length - w, units: u,
+           roi: picks.length ? (u / picks.length) * 100 : 0 };
 }

@@ -182,7 +182,7 @@ export default function BacktestView({ initial }: { initial: Backtest }) {
 
   return (
     <>
-      <h1>Backtest</h1>
+      <h1>Results</h1>
 
       {/* Keyed off the data, not a hard-coded string, so it cannot be edited
           away in the template while the numbers stay. */}

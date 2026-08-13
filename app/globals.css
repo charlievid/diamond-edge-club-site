@@ -130,3 +130,10 @@ details.season .chartwrap { background: transparent; padding: 6px 0 0; margin: 6
   min-width: 92px; font-variant-numeric: tabular-nums; }
 .today .none { color: var(--silver); line-height: 1.7; padding: 10px 0 2px; }
 .today .none b { color: var(--white); display: block; margin-bottom: 4px; }
+
+/* Simulated rows are marked inline. A backtested bet and a staked one look
+   identical in a table unless something says otherwise, and that difference is
+   the whole meaning of a ledger. */
+.simtag { display: inline-block; margin-left: 8px; padding: 2px 7px; border-radius: 999px;
+  background: rgba(167,169,172,.16); color: var(--silver); font-size: 10px;
+  font-weight: 800; letter-spacing: .1em; text-transform: uppercase; vertical-align: middle; }
