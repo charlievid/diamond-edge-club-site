@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: "Diamond Edge Club — The Ledger",
   description:
     "What the numbers say before first pitch, and every call graded in public after.",
+  icons: {
+    icon: `${base}/favicon.ico`,
+    apple: `${base}/apple-touch-icon.png`,
+  },
 };
 
 export default function RootLayout({
@@ -23,10 +29,14 @@ export default function RootLayout({
       <body>
         <header className="site">
           <div className="wrap row">
-            <div className="brand">
-              Diamond Edge Club
-              <small>Data. Insight. Edge.</small>
-            </div>
+            <Link href="/" className="brand">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`${base}/logo.png`} alt="" className="mark" width={44} height={44} />
+              <span>
+                Diamond Edge Club
+                <small>Data. Insight. Edge.</small>
+              </span>
+            </Link>
             <nav>
               <Link href="/">Ledger</Link>
               <Link href="/backtest">Backtest</Link>

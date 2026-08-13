@@ -103,3 +103,30 @@ details.season .chartwrap { background: transparent; padding: 6px 0 0; margin: 6
   text-transform: uppercase; margin-bottom: 8px; }
 .finding b { display: block; margin-bottom: 8px; font-size: 17px; }
 .finding p { color: var(--silver); line-height: 1.65; font-size: 15px; }
+
+/* --- brand mark --------------------------------------------------------- */
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .mark { width: 44px; height: 44px; display: block; border-radius: 8px; }
+.brand span { display: block; }
+
+/* --- today's card, kept visually separate from the settled history ------ */
+.today { background: var(--charcoal); border: 1px solid var(--line);
+  border-radius: 14px; padding: 24px 26px; margin: 26px 0 34px; }
+.today .hdr { display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px; margin-bottom: 4px; }
+.today .hdr h3 { font-size: 20px; font-weight: 900; letter-spacing: .08em;
+  text-transform: uppercase; }
+.today .when { color: var(--silver); font-size: 12px; letter-spacing: .12em;
+  text-transform: uppercase; }
+.today .sub { color: var(--silver); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.today .row { display: flex; align-items: center; gap: 16px; padding: 16px 0;
+  border-top: 1px solid var(--line); }
+.today .row:last-child { padding-bottom: 0; }
+.today .side { font-size: 30px; font-weight: 900; letter-spacing: .02em; min-width: 74px; }
+.today .vs { color: var(--silver); font-size: 14px; }
+.today .price { margin-left: auto; font-size: 26px; font-weight: 900;
+  color: var(--red); font-variant-numeric: tabular-nums; }
+.today .edge { color: var(--silver); font-size: 13px; text-align: right;
+  min-width: 92px; font-variant-numeric: tabular-nums; }
+.today .none { color: var(--silver); line-height: 1.7; padding: 10px 0 2px; }
+.today .none b { color: var(--white); display: block; margin-bottom: 4px; }

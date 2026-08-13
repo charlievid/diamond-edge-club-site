@@ -13,6 +13,13 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
   // pre-registered sample gate is met. ROI is withheld, not greyed out.
   const showPerformance = gate.claim_permitted;
 
+  // Today's card is kept visually separate from the graded history. A pending
+  // pick and a settled one are different claims: one is a prediction on the
+  // record, the other is a result. Mixing them in one table invites reading a
+  // hot streak into a list that is really just "what is live right now".
+  const pending = picks.filter((p) => !p.settled);
+  const settled = picks.filter((p) => p.settled);
+
   return (
     <>
       <h1>The Ledger</h1>
@@ -84,13 +91,48 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
         </div>
       </div>
 
-      <h2>Every pick</h2>
-      {picks.length === 0 ? (
+      <div className="today">
+        <div className="hdr">
+          <h3>{pending.length ? "Today's card" : "No card today"}</h3>
+          <span className="when">
+            {pending.length
+              ? `${pending.length} pick${pending.length === 1 ? "" : "s"} · flat 1 unit`
+              : "published before first pitch"}
+          </span>
+        </div>
+        {pending.length === 0 ? (
+          <div className="none">
+            <b>Nothing cleared the threshold.</b>
+            No game on the board met the pre-registered edge, so nothing is
+            published. A day with no bet is a result too, and it gets shown.
+          </div>
+        ) : (
+          <>
+            <div className="sub">
+              Published before first pitch and already written to the ledger below.
+              These move into the record the moment they settle.
+            </div>
+            {pending.map((p) => (
+              <div className="row" key={`${p.date}-${p.matchup}-${p.pick}`}>
+                <span className="side">{p.pick}</span>
+                <span className="vs">{p.matchup}</span>
+                <span className="price">{americanOdds(p.price)}</span>
+                <span className="edge">
+                  {p.edge_pct !== null ? `edge ${p.edge_pct > 0 ? "+" : ""}${p.edge_pct.toFixed(1)}` : ""}
+                </span>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+
+      <h2>The record</h2>
+      {settled.length === 0 ? (
         <div className="empty">
-          No picks published yet.
+          No graded bets yet.
           <br />
-          The first one appears here the day it is committed, not after it
-          settles.
+          A pick appears here once its game is final &mdash; win or lose,
+          nothing is removed.
         </div>
       ) : (
         <table>
@@ -106,7 +148,7 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
             </tr>
           </thead>
           <tbody>
-            {[...picks].reverse().map((p) => (
+            {[...settled].reverse().map((p) => (
               <tr key={`${p.date}-${p.matchup}-${p.pick}`}>
                 <td className="mono">{p.date}</td>
                 <td>{p.matchup}</td>
@@ -116,9 +158,7 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
                 <td className="mono">{americanOdds(p.price)}</td>
                 <td className="mono">{p.score ?? "—"}</td>
                 <td>
-                  {!p.settled ? (
-                    <span className="tag p">pending</span>
-                  ) : p.won ? (
+                  {p.won ? (
                     <span className="tag w">WON</span>
                   ) : (
                     <span className="tag l">LOST</span>
