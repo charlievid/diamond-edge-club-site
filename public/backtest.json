@@ -1,7 +1,7 @@
 {
   "kind": "backtest",
   "bets_placed": 0,
-  "generated_at": "2026-08-14T20:56:50+00:00",
+  "generated_at": "2026-08-14T21:07:47+00:00",
   "params": {
     "ref": "DEC-ML-003",
     "min_decimal": 1.8,
