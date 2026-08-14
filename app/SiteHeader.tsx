@@ -46,14 +46,13 @@ export default function SiteHeader() {
         <div className="row">
           <Link href="/" className="brand" aria-label="Diamond Edge Club, home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {/* 256px source for a 62px mark: 4x, so it stays sharp on any
-                display, without shipping the 512 (239KB) for a header icon. */}
+            {/* 320px source for a 100px mark: 3.2x, sharp on a 3x display. */}
             <img
-              src={`${base}/logo-256.png`}
+              src={`${base}/logo-320.png`}
               alt=""
               className="mark"
-              width={62}
-              height={62}
+              width={100}
+              height={100}
               fetchPriority="high"
             />
             <span className="wordmark">

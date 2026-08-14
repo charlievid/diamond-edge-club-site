@@ -94,30 +94,33 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
             <th>Bets</th>
             <th>W–L</th>
             <th>Win%</th>
-            <th>B/E</th>
-            <th>Margin</th>
+            <th className="c-be">B/E</th>
+            <th className="c-be">Margin</th>
             <th>ROI</th>
             <th>P/L</th>
-            <th>Bankroll</th>
+            <th className="c-bank">Bankroll</th>
           </tr>
         </thead>
         <tbody>
           {s.months.map((m) => (
             <tr key={m.month}>
-              <td className="mono">{m.month}</td>
+              <td className="mono">
+                <span className="d-long">{m.month}</span>
+                <span className="d-short">{m.month.slice(5)}</span>
+              </td>
               <td className="mono">{m.bets}</td>
               <td className="mono">
                 {m.wins}–{m.losses}
               </td>
               <td className="mono">{m.win_pct.toFixed(1)}%</td>
-              <td className="mono">{m.breakeven_pct.toFixed(1)}%</td>
-              <td className="mono">
+              <td className="mono c-be">{m.breakeven_pct.toFixed(1)}%</td>
+              <td className="mono c-be">
                 {m.margin > 0 ? "+" : ""}
                 {m.margin.toFixed(2)}
               </td>
               <td className="mono">{pct(m.roi_pct)}</td>
               <td className="mono">{money(m.pl)}</td>
-              <td className="mono">{money(m.bank_end)}</td>
+              <td className="mono c-bank">{money(m.bank_end)}</td>
             </tr>
           ))}
         </tbody>
@@ -136,39 +139,42 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Game</th>
+              <th className="c-game">Game</th>
               <th>Pick</th>
               <th>Price</th>
-              <th>Model</th>
-              <th>Fair</th>
+              <th className="c-model">Model</th>
+              <th className="c-model">Fair</th>
               <th>Edge</th>
-              <th>Score</th>
+              <th className="c-score">Score</th>
               <th>R</th>
               <th>P/L</th>
-              <th>Bankroll</th>
+              <th className="c-bank">Bankroll</th>
             </tr>
           </thead>
           <tbody>
             {s.picks.map((p, i) => (
               <tr key={`${p.date}-${p.matchup}-${i}`}>
-                <td className="mono">{p.date}</td>
-                <td>{p.matchup}</td>
+                <td className="mono">
+                  <span className="d-long">{p.date}</span>
+                  <span className="d-short">{p.date.slice(5)}</span>
+                </td>
+                <td className="c-game">{p.matchup}</td>
                 <td>
                   <strong>{p.pick}</strong>
                 </td>
                 <td className="mono">{odds(p.american)}</td>
-                <td className="mono">{(p.model_prob * 100).toFixed(1)}%</td>
-                <td className="mono">{(p.fair_prob * 100).toFixed(1)}%</td>
+                <td className="mono c-model">{(p.model_prob * 100).toFixed(1)}%</td>
+                <td className="mono c-model">{(p.fair_prob * 100).toFixed(1)}%</td>
                 <td className="mono">
                   {p.edge > 0 ? "+" : ""}
                   {(p.edge * 100).toFixed(1)}
                 </td>
-                <td className="mono">{p.score}</td>
+                <td className="mono c-score">{p.score}</td>
                 <td>
                   <span className={`tag ${p.won ? "w" : "l"}`}>{p.won ? "W" : "L"}</span>
                 </td>
                 <td className="mono">{money(p.pl)}</td>
-                <td className="mono">{money(p.bank)}</td>
+                <td className="mono c-bank">{money(p.bank)}</td>
               </tr>
             ))}
           </tbody>
@@ -188,33 +194,31 @@ export default function BacktestView({ initial }: { initial: Backtest }) {
     <>
       <section className="hero">
         <span className="eyebrow">
-          Simulation · {c.bets.toLocaleString()} bets · {c.seasons.join("–")}
+          {d.kind === "backtest" ? "Simulation" : "Record"} ·{" "}
+          {c.bets.toLocaleString()} bets · {c.seasons.join("–")}
         </span>
         <h1>Results</h1>
         <p className="promise">
           How the rule was built, replayed month by month on prices it never saw
-          during fitting. <b>No money was on any of it.</b> The seasons where it
-          fails are on this page too.
+          during fitting.{" "}
+          {/* Keyed off the data, not a hard-coded string, so this cannot drift
+              away from the numbers it describes. */}
+          <b>
+            {d.bets_placed === 0
+              ? "No money was on any of it."
+              : `${d.bets_placed} of these were actually placed.`}
+          </b>{" "}
+          The seasons where the rule fails are on this page too. The staked
+          record is on{" "}
+          <a
+            href={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/"}
+            style={{ textDecoration: "underline" }}
+          >
+            The Ledger
+          </a>
+          .
         </p>
       </section>
-
-      {/* Keyed off the data, not a hard-coded string, so it cannot be edited
-          away in the template while the numbers stay. */}
-      {d.kind === "backtest" && (
-        <div className="banner">
-          <b>Simulation — {d.bets_placed} bets were actually placed.</b>
-          <p>
-            Every row on this page was scored after the fact. The model was refit on the 1st
-            of each month and each month graded retrospectively at closing consensus prices.
-            This is how the strategy was built, not a record of money wagered. The live record
-            is on{" "}
-            <a href={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + "/"} style={{ textDecoration: "underline" }}>
-              The Ledger
-            </a>
-            .
-          </p>
-        </div>
-      )}
 
       <div className="stats">
         <div className="stat">

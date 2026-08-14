@@ -152,6 +152,10 @@ p.lede {
 
 .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
+/* Two date forms are rendered into every row; CSS chooses one per breakpoint,
+   so the served HTML is right before any JS runs. */
+.d-short { display: none; }
+
 /* --- header ------------------------------------------------------------- */
 
 header.site {
@@ -168,14 +172,16 @@ header.site .row {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 14px 0;
+  /* trimmed as the mark grew to 100px, so the sticky bar does not eat the
+     viewport on a laptop */
+  padding: 8px 0;
   min-width: 0;
 }
 
-.brand { display: flex; align-items: center; gap: 15px; min-width: 0; }
+.brand { display: flex; align-items: center; gap: 18px; min-width: 0; }
 .brand .mark {
-  width: 62px;
-  height: 62px;
+  width: 100px;
+  height: 100px;
   flex: none;
   display: block;
   /* guidelines: no effects or shadows on the logo, and clear space around it */
@@ -740,7 +746,61 @@ footer.site .promise::before {
   background: var(--red);
   transform: rotate(45deg);
 }
-footer.site .fine { max-width: 70ch; }
+footer.site .fine { max-width: 74ch; margin-top: 30px; font-size: 12px; opacity: 0.85; }
+
+.foot-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 30px 34px;
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line-soft);
+}
+.foot-col { display: flex; flex-direction: column; gap: 11px; min-width: 0; }
+.foot-h {
+  color: var(--white);
+  font-family: var(--display);
+  font-stretch: 112%;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+.foot-col > a {
+  color: var(--silver);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.16s ease;
+  width: fit-content;
+}
+.foot-col > a:hover { color: var(--white); }
+
+.foot-social { display: inline-flex; align-items: center; gap: 9px; }
+.foot-social svg { flex: none; }
+
+/* Partner links carry the brand red, because they are the only outbound
+   calls-to-action on the site and the guidelines reserve red for exactly that. */
+.foot-aff {
+  display: block;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+  border-radius: 9px;
+  padding: 11px 14px;
+  color: var(--white) !important;
+  font-weight: 700 !important;
+  width: 100% !important;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.foot-aff:hover { border-color: var(--red-edge); background: var(--red-wash); }
+.foot-aff small {
+  display: block;
+  color: var(--silver);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
 
 /* --- responsive --------------------------------------------------------- */
 
@@ -750,9 +810,13 @@ footer.site .fine { max-width: 70ch; }
   .burger { display: grid; }
   nav.mob.open { display: block; }
 
-  .brand .mark { width: 50px; height: 50px; }
-  .brand .nm { font-size: 16px; letter-spacing: 0.08em; }
-  .brand .tag { font-size: 9px; letter-spacing: 0.26em; }
+  .brand { gap: 12px; }
+  .brand .mark { width: 68px; height: 68px; }
+  /* nowrap, deliberately: allowed to wrap, "DIAMOND EDGE CLUB" broke onto two
+     lines and pushed the sticky header to ~155px, eating a fifth of the screen
+     on every scroll. It fits on one line at this size down to 360px. */
+  .brand .nm { font-size: 14px; letter-spacing: 0.05em; white-space: nowrap; }
+  .brand .tag { font-size: 9px; letter-spacing: 0.24em; }
 
   .hero { padding: 40px 0 6px; }
   h2 { margin: 44px 0 16px; }
@@ -762,10 +826,25 @@ footer.site .fine { max-width: 70ch; }
   .today .price { margin-left: auto; }
   .today .edge { min-width: 0; text-align: left; width: 100%; }
 
-  details.season > summary { padding: 18px 16px; gap: 12px; }
-  details.season > *:not(summary) { padding-left: 16px; padding-right: 16px; }
-  details.season > details.picks { padding: 0 16px 16px; }
-  details.season .roi { margin-left: auto; }
+  details.season > summary { padding: 18px 14px; gap: 9px; flex-wrap: nowrap; }
+  details.season > *:not(summary) { padding-left: 14px; padding-right: 14px; }
+  details.season > details.picks { padding: 0 14px 16px; }
+  /* Sized so month, record and units all fit one line. "+7.49u" was dropping to
+     a row of its own on the June block while every other month stayed inline,
+     which read as a rendering fault rather than a layout. */
+  details.season .yr { font-size: 18px; letter-spacing: 0; white-space: nowrap; }
+  details.season .sm { font-size: 11.5px; white-space: nowrap; }
+  details.season .roi { margin-left: auto; font-size: 16px; white-space: nowrap; }
+
+  /* Mobile columns: drop the two widest, lowest-value fields and shorten the
+     date so the table fits the viewport instead of scrolling sideways. */
+  .c-game, .c-score, .c-model, .c-be, .c-bank { display: none; }
+  .d-long { display: none; }
+  .d-short { display: inline; }
+  table { font-size: 12.5px; }
+  th { font-size: 9px; letter-spacing: 0.1em; padding: 10px 7px; }
+  td { padding: 11px 7px; }
+  .tag { font-size: 10px; padding: 2px 7px; }
 
   .stats { grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); gap: 10px; }
   .stat { padding: 18px 12px; }
@@ -778,6 +857,13 @@ footer.site .fine { max-width: 70ch; }
   .chart { min-width: 540px; }
 }
 
+/* Very narrow phones: the mark is the priority, so the words go first. The
+   logo already reads "DIAMOND EDGE CLUB" around its ring. */
+@media (max-width: 379px) {
+  .brand .nm { display: none; }
+  .brand .mark { width: 62px; height: 62px; }
+}
+
 @media (max-width: 480px) {
   .brand .tag { display: none; }   /* keep the mark large rather than the words */
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -788,6 +874,16 @@ footer.site .fine { max-width: 70ch; }
   pre.rule { padding: 16px; font-size: 12px; }
   .eyebrow { font-size: 10px; letter-spacing: 0.2em; }
   .hero { padding: 32px 0 4px; }
+
+  /* Last squeeze so the Results tables clear a 390px viewport. Measured: the
+     six remaining columns were ~24px over, which is exactly the padding this
+     removes. Anything narrower than this would need another column dropped. */
+  table { font-size: 12px; }
+  th { padding: 9px 4px; letter-spacing: 0.06em; }
+  td { padding: 10px 4px; }
+  details.season > summary { padding: 16px 12px; }
+  details.season > *:not(summary) { padding-left: 12px; padding-right: 12px; }
+  details.season > details.picks { padding: 0 12px 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
