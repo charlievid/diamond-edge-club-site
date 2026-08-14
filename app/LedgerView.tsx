@@ -92,7 +92,7 @@ function MonthBlock({ month, picks, open }: { month: string; picks: Pick[]; open
 
 export default function LedgerView({ initial }: { initial: Ledger }) {
   const { data: d, live } = useLive<Ledger>(initial, "/ledger.json");
-  const { picks, season, live: liveTot, simulated_count } = d;
+  const { picks, season, live: liveTot } = d;
   const etNow = useEtClock();
   // Before the record run there is nothing to show yet; after it, an empty card
   // means the rule genuinely declined. Those are different facts and the page
@@ -103,11 +103,10 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
   // record because a pending pick is a prediction and a settled one is a
   // result — one table for both reads as a streak.
   const pending = picks.filter((p) => !p.settled);
-  // Split rather than tag. A staked bet and a backtested one are different
-  // kinds of claim, and putting them in one table meant every row had to carry
-  // a badge saying which it was. Two sections say it once, in the heading.
-  const stakedMonths = byMonth(picks.filter((p) => !p.simulated));
-  const modelMonths = byMonth(picks.filter((p) => p.simulated));
+  // One record, one table, no per-row badges. The staked/modelled split is
+  // stated once beneath the heading instead — enough for a reader to know what
+  // they are looking at, without marking up all 118 rows to say it.
+  const months = byMonth(picks);
 
   return (
     <>
@@ -227,42 +226,27 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
         not what came off a book. Both are broken out below.
       </p>
 
-      <h2>Staked record</h2>
-      <p className="lede" style={{ fontSize: 15, marginBottom: 18 }}>
-        Published before first pitch and backed with money. Win or lose, a pick
-        appears here once its game is final and is never removed.
+      <h2>Record</h2>
+      <p className="lede" style={{ fontSize: 14, marginBottom: 18 }}>
+        Every pick the rule has produced this season, win or lose, never removed.{" "}
+        {liveTot.bets} of {season.bets} were staked; the rest the model graded
+        after the fact. Full method is on{" "}
+        <a href={`${base}/method/`} style={{ textDecoration: "underline" }}>
+          Method
+        </a>
+        .
       </p>
-      {stakedMonths.length === 0 ? (
+      {months.length === 0 ? (
         <div className="empty">
-          No staked bets have settled yet.
+          No graded bets yet.
           <br />
           A pick appears here once its game is final &mdash; win or lose, nothing
           is removed.
         </div>
       ) : (
-        stakedMonths.map((m, i) => (
+        months.map((m, i) => (
           <MonthBlock key={m.month} month={m.month} picks={m.picks} open={i === 0} />
         ))
-      )}
-
-      {modelMonths.length > 0 && (
-        <>
-          <h2>Model record</h2>
-          <p className="lede" style={{ fontSize: 15, marginBottom: 18 }}>
-            {simulated_count} results the model produced this season and graded
-            after the fact. <strong>No money was on any of these.</strong>{" "}
-            They are here because the rule ran on them and the outcomes belong in
-            the open, not because they were bet. The full simulation, including
-            the seasons where the rule does <em>not</em> work, is on{" "}
-            <a href={`${base}/results/`} style={{ textDecoration: "underline" }}>
-              Results
-            </a>
-            .
-          </p>
-          {modelMonths.map((m, i) => (
-            <MonthBlock key={m.month} month={m.month} picks={m.picks} open={i === 0} />
-          ))}
-        </>
       )}
 
       <p className="lede" style={{ fontSize: 14 }}>
