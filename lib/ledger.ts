@@ -85,6 +85,26 @@ export function fmtUnits(u: number | null): string {
   return `${u > 0 ? "+" : ""}${u.toFixed(2)}`;
 }
 
+/** Dollars per unit for the illustrative stake conversion on the Ledger. */
+export const STAKE_USD = 100;
+
+/**
+ * Units expressed at STAKE_USD a unit.
+ *
+ * This is arithmetic on the unit figure, not a record of money moved. The
+ * season total is mostly `sim` picks, so the dollar number inherits exactly the
+ * same caveat as the units it is derived from and must be labelled with it.
+ */
+export function fmtUsd(u: number | null): string {
+  if (u === null || u === undefined) return "—";
+  const d = u * STAKE_USD;
+  const sign = d > 0 ? "+" : d < 0 ? "−" : "";
+  return `${sign}$${Math.abs(d).toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })}`;
+}
+
 /** Running bankroll in units, oldest first. Used by the equity curve. */
 export function equityCurve(picks: Pick[]): { i: number; units: number }[] {
   let run = 0;

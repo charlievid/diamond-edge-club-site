@@ -36,7 +36,13 @@ p.lede { color: var(--silver); font-size: 18px; line-height: 1.65; max-width: 68
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 26px 0; }
 .stat { background: var(--charcoal); border-radius: 12px; padding: 22px 18px; text-align: center; }
 .stat .v { font-size: 34px; font-weight: 900; }
+/* Matches details.season .roi: a loss is the only thing that gets colour. */
+.stat .v.up { color: var(--white); }
+.stat .v.down { color: #FF7488; }
 .stat .l { color: var(--silver); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin-top: 6px; }
+/* The dollar tile carries a longer label than the others; keep it on two lines
+   rather than letting it force the whole grid wider. */
+.stat .l.wide { letter-spacing: .1em; }
 
 .gate { background: var(--charcoal); border-radius: 12px; padding: 22px; margin: 22px 0; }
 .gate .top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }

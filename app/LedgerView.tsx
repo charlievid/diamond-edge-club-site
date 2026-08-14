@@ -1,7 +1,7 @@
 "use client";
 
 import type { Ledger, Pick } from "@/lib/ledger";
-import { americanOdds, fmtUnits, byMonth, monthLabel, totals } from "@/lib/ledger";
+import { americanOdds, fmtUnits, fmtUsd, byMonth, monthLabel, totals, STAKE_USD } from "@/lib/ledger";
 import { useLive } from "@/lib/useLive";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -95,7 +95,25 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
           </div>
           <div className="l">roi</div>
         </div>
+        {/* Same scope as the units and ROI beside it: the 2026 season, which is
+            mostly `sim`. The label says "would have" because that is what the
+            number is — units x $100, not money that moved. */}
+        <div
+          className="stat"
+          title={`2026 units x $${STAKE_USD}/bet. ${liveTot.bets} of ${season.bets} bets were actually staked — the rest are model results scored after the fact.`}
+        >
+          <div className={`v ${season.units >= 0 ? "up" : "down"}`}>
+            {fmtUsd(season.units)}
+          </div>
+          <div className="l wide">would have, at ${STAKE_USD}/bet</div>
+        </div>
       </div>
+      <p className="lede" style={{ fontSize: 13, marginTop: -14, opacity: 0.75 }}>
+        Units &times; ${STAKE_USD}. {liveTot.bets} of {season.bets} bets were
+        published live and staked ({fmtUsd(liveTot.units)}); the rest are model
+        results scored after the fact, so the season figure is what the rule
+        would have returned, not money taken off a book.
+      </p>
 
       <div className="today">
         <div className="hdr">
