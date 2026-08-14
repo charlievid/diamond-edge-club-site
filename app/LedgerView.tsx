@@ -21,6 +21,7 @@ function MonthBlock({ month, picks, open }: { month: string; picks: Pick[]; open
           {fmtUnits(t.units)}u
         </span>
       </summary>
+      <div className="tablewrap">
       <table>
         <thead>
           <tr>
@@ -54,6 +55,7 @@ function MonthBlock({ month, picks, open }: { month: string; picks: Pick[]; open
           ))}
         </tbody>
       </table>
+      </div>
     </details>
   );
 }
@@ -70,7 +72,65 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
 
   return (
     <>
-      <h1>The Ledger</h1>
+      {/* The hero leads with the promise rather than a number, because the
+          promise is the product: anyone can show a good number, and the whole
+          point of this page is that nothing was removed to get it. */}
+      <section className="hero">
+        <span className="eyebrow">
+          {d.registration.ref} · pre-registered{" "}
+          <span style={{ whiteSpace: "nowrap" }}>
+            {d.registration.registered_at.slice(0, 10)}
+          </span>
+        </span>
+        <h1>The Ledger</h1>
+        <p className="promise">
+          Every pick this model makes is <b>published before first pitch</b> and{" "}
+          <b>graded in public after</b>. Wins and losses land in the same table.
+          Nothing is deleted, and nothing is re-priced once it is written.
+        </p>
+      </section>
+
+      {/* Today's card sits above the record on purpose. The live slate is the
+          only thing on this page that has not happened yet, which makes it the
+          one part a reader can check us on. */}
+      <div className="today">
+        <div className="hdr">
+          <h3>{pending.length ? "Today's card" : "No card today"}</h3>
+          <span className={`when${pending.length ? " livedot" : ""}`}>
+            {pending.length
+              ? `${pending.length} pick${pending.length === 1 ? "" : "s"} · flat 1 unit`
+              : "published before first pitch"}
+          </span>
+        </div>
+        {pending.length === 0 ? (
+          <div className="none">
+            <b>Nothing cleared the threshold.</b>
+            No game on the board met the pre-registered edge, so nothing is
+            published. A day with no bet is a result too, and it gets shown.
+          </div>
+        ) : (
+          <>
+            <div className="sub">
+              Published before first pitch. These move into the record the moment
+              they settle.
+            </div>
+            {pending.map((p) => (
+              <div className="row" key={`${p.date}-${p.matchup}-${p.pick}`}>
+                <span className="plate">{p.pick}</span>
+                <span className="vs">{p.matchup}</span>
+                <span className="price">{americanOdds(p.price)}</span>
+                <span className="edge">
+                  {p.edge_pct !== null
+                    ? `edge ${p.edge_pct > 0 ? "+" : ""}${p.edge_pct.toFixed(1)}`
+                    : ""}
+                </span>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+
+      <h2>2026 season</h2>
 
       <div className="stats">
         <div className="stat">
@@ -114,43 +174,6 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
         results scored after the fact, so the season figure is what the rule
         would have returned, not money taken off a book.
       </p>
-
-      <div className="today">
-        <div className="hdr">
-          <h3>{pending.length ? "Today's card" : "No card today"}</h3>
-          <span className="when">
-            {pending.length
-              ? `${pending.length} pick${pending.length === 1 ? "" : "s"} · flat 1 unit`
-              : "published before first pitch"}
-          </span>
-        </div>
-        {pending.length === 0 ? (
-          <div className="none">
-            <b>Nothing cleared the threshold.</b>
-            No game on the board met the pre-registered edge, so nothing is
-            published. A day with no bet is a result too, and it gets shown.
-          </div>
-        ) : (
-          <>
-            <div className="sub">
-              Published before first pitch. These move into the record the moment
-              they settle.
-            </div>
-            {pending.map((p) => (
-              <div className="row" key={`${p.date}-${p.matchup}-${p.pick}`}>
-                <span className="side">{p.pick}</span>
-                <span className="vs">{p.matchup}</span>
-                <span className="price">{americanOdds(p.price)}</span>
-                <span className="edge">
-                  {p.edge_pct !== null
-                    ? `edge ${p.edge_pct > 0 ? "+" : ""}${p.edge_pct.toFixed(1)}`
-                    : ""}
-                </span>
-              </div>
-            ))}
-          </>
-        )}
-      </div>
 
       <h2>Record</h2>
       {simulated_count > 0 && (

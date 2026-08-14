@@ -18,14 +18,20 @@ export default function MethodView({ initial }: { initial: Ledger }) {
 
   return (
     <>
-      <h1>Method</h1>
-      <p className="lede">
-        The rule below was filed on{" "}
-        {new Date(r.registered_at).toISOString().slice(0, 10)} and is quoted
-        verbatim from the registration record. It is not a summary. Changing any
-        part of it requires filing a new registration that supersedes this one,
-        with the original preserved.
-      </p>
+      <section className="hero">
+        <span className="eyebrow">
+          {r.ref} · filed{" "}
+          <span style={{ whiteSpace: "nowrap" }}>
+            {new Date(r.registered_at).toISOString().slice(0, 10)}
+          </span>
+        </span>
+        <h1>Method</h1>
+        <p className="promise">
+          The rule below is quoted <b>verbatim</b> from the registration record.
+          It is not a summary. Changing any part of it means filing a new
+          registration that supersedes this one, with the original preserved.
+        </p>
+      </section>
 
       <div className="banner">
         <b>

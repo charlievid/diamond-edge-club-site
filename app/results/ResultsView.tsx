@@ -86,6 +86,7 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
 
       <EquityChart s={s} />
 
+      <div className="tablewrap">
       <table>
         <thead>
           <tr>
@@ -121,6 +122,7 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
           ))}
         </tbody>
       </table>
+      </div>
 
       <p className="lede" style={{ fontSize: 14, marginBottom: 8 }}>
         CI90 [{pct(q.ci90_lo)}, {pct(q.ci90_hi)}], P(ROI&gt;0) = {q.p_positive.toFixed(3)} ·{" "}
@@ -129,6 +131,7 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
 
       <details className="picks">
         <summary>All {s.picks.length} bets</summary>
+        <div className="tablewrap">
         <table>
           <thead>
             <tr>
@@ -170,6 +173,7 @@ function SeasonBlock({ s, open }: { s: BtSeason; open: boolean }) {
             ))}
           </tbody>
         </table>
+        </div>
       </details>
     </details>
   );
@@ -182,7 +186,17 @@ export default function BacktestView({ initial }: { initial: Backtest }) {
 
   return (
     <>
-      <h1>Results</h1>
+      <section className="hero">
+        <span className="eyebrow">
+          Simulation · {c.bets.toLocaleString()} bets · {c.seasons.join("–")}
+        </span>
+        <h1>Results</h1>
+        <p className="promise">
+          How the rule was built, replayed month by month on prices it never saw
+          during fitting. <b>No money was on any of it.</b> The seasons where it
+          fails are on this page too.
+        </p>
+      </section>
 
       {/* Keyed off the data, not a hard-coded string, so it cannot be edited
           away in the template while the numbers stay. */}
