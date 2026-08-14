@@ -107,6 +107,10 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
   // stated once beneath the heading instead — enough for a reader to know what
   // they are looking at, without marking up all 118 rows to say it.
   const months = byMonth(picks);
+  // Derived, not written down, so it tracks the record instead of describing a
+  // date someone typed once.
+  const stakedDates = picks.filter((p) => !p.simulated).map((p) => p.date).sort();
+  const liveSince = stakedDates.length ? stakedDates[0] : null;
 
   return (
     <>
@@ -229,7 +233,8 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
       <h2>Record</h2>
       <p className="lede" style={{ fontSize: 14, marginBottom: 18 }}>
         Every pick the rule has produced this season, win or lose, never removed.{" "}
-        {liveTot.bets} of {season.bets} were staked; the rest the model graded
+        {liveSince ? `Grading live since ${liveSince}; ` : ""}
+        {liveTot.bets} of {season.bets} were staked, the rest the model graded
         after the fact. Full method is on{" "}
         <a href={`${base}/method/`} style={{ textDecoration: "underline" }}>
           Method

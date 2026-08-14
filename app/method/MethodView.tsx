@@ -14,7 +14,12 @@ import { useLive } from "@/lib/useLive";
  */
 export default function MethodView({ initial }: { initial: Ledger }) {
   const { data } = useLive<Ledger>(initial, "/ledger.json");
-  const { registration: r, gate, findings } = data;
+  const { registration: r, gate, findings, picks } = data;
+
+  // First staked pick, read from the data rather than written down, so the date
+  // cannot drift away from the record it describes.
+  const staked = picks.filter((p) => !p.simulated).map((p) => p.date).sort();
+  const liveSince = staked.length ? staked[0] : null;
 
   return (
     <>
@@ -38,9 +43,16 @@ export default function MethodView({ initial }: { initial: Ledger }) {
           Status: {r.status.toUpperCase()} &middot; {r.ref}
         </b>
         <p>
-          {gate.bets_graded} of {gate.bets_required} graded bets. No performance
-          claim is published before that gate, and the failure condition below is
-          committed to in advance rather than decided once the results are in.
+          {/* The countdown is gone from the page, not from the rule. The gate
+              below still governs when a performance claim may be made; showing
+              a running "N of 600" only invited the number to be read as
+              progress toward permission to sell something. */}
+          {liveSince
+            ? `Grading live since ${liveSince}. `
+            : "Grading live from the first staked pick. "}
+          No performance claim is published until the sample gate below is met,
+          and the failure condition is committed to in advance rather than
+          decided once the results are in.
         </p>
       </div>
 
