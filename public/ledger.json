@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-14T21:16:55+00:00",
+  "generated_at": "2026-08-14T21:36:55+00:00",
   "registration": {
     "ref": "DEC-ML-003",
     "status": "open",
@@ -38,8 +38,8 @@
     "bets": 120,
     "wins": 67,
     "losses": 53,
-    "units": 43.727,
-    "roi_pct": 36.44
+    "units": 43.707,
+    "roi_pct": 36.42
   },
   "live": {
     "bets": 1,
@@ -2078,16 +2078,16 @@
       "matchup": "TEX @ LAA",
       "pick": "LAA",
       "pick_full": null,
-      "price": 134,
-      "decimal": 2.34,
-      "model_prob": 0.4626,
-      "market_prob": 0.4147,
-      "edge_pct": 4.79,
+      "price": 133,
+      "decimal": 2.33,
+      "model_prob": 0.4652,
+      "market_prob": 0.4183,
+      "edge_pct": 4.69,
       "published_at": null,
       "settled": true,
       "won": true,
       "score": "0-7",
-      "profit_units": 2.68,
+      "profit_units": 2.66,
       "simulated": true
     },
     {
