@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-14T21:36:55+00:00",
+  "generated_at": "2026-08-15T07:49:51+00:00",
   "registration": {
     "ref": "DEC-ML-003",
     "status": "open",
@@ -20,33 +20,33 @@
   "gate": {
     "bets_required": 600,
     "days_required": 150,
-    "bets_graded": 1,
-    "days_elapsed": 73,
+    "bets_graded": 4,
+    "days_elapsed": 74,
     "met": false,
     "claim_permitted": false
   },
   "summary": {
-    "published": 123,
-    "graded": 1,
+    "published": 126,
+    "graded": 4,
     "pending": 3,
-    "wins": 1,
-    "losses": 0,
-    "units": 0.877,
-    "roi_pct": 87.72
+    "wins": 2,
+    "losses": 2,
+    "units": 0.567,
+    "roi_pct": 14.18
   },
   "season": {
-    "bets": 120,
-    "wins": 67,
-    "losses": 53,
-    "units": 43.707,
-    "roi_pct": 36.42
+    "bets": 123,
+    "wins": 68,
+    "losses": 55,
+    "units": 43.397,
+    "roi_pct": 35.28
   },
   "live": {
-    "bets": 1,
-    "wins": 1,
-    "losses": 0,
-    "units": 0.877,
-    "roi_pct": 87.7
+    "bets": 4,
+    "wins": 2,
+    "losses": 2,
+    "units": 0.567,
+    "roi_pct": 14.17
   },
   "simulated_count": 119,
   "picks": [
@@ -2101,10 +2101,10 @@
       "market_prob": 0.4866,
       "edge_pct": 5.15,
       "published_at": "2026-08-14T15:19:22+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": false,
+      "score": "0-1",
+      "profit_units": -1.0,
       "simulated": false
     },
     {
@@ -2118,10 +2118,10 @@
       "market_prob": 0.362,
       "edge_pct": 8.74,
       "published_at": "2026-08-14T17:44:22+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": true,
+      "score": "2-0",
+      "profit_units": 1.69,
       "simulated": false
     },
     {
@@ -2135,6 +2135,57 @@
       "market_prob": 0.5371,
       "edge_pct": 4.41,
       "published_at": "2026-08-14T21:07:24+00:00",
+      "settled": true,
+      "won": false,
+      "score": "4-8",
+      "profit_units": -1.0,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-15",
+      "matchup": "MIA @ CIN",
+      "pick": "MIA",
+      "pick_full": "Miami Marlins",
+      "price": -103,
+      "decimal": 1.971,
+      "model_prob": 0.5459,
+      "market_prob": 0.49,
+      "edge_pct": 5.58,
+      "published_at": "2026-08-15T07:49:38+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-15",
+      "matchup": "AZ @ ATL",
+      "pick": "AZ",
+      "pick_full": "Arizona Diamondbacks",
+      "price": 118,
+      "decimal": 2.18,
+      "model_prob": 0.4869,
+      "market_prob": 0.4409,
+      "edge_pct": 4.59,
+      "published_at": "2026-08-15T07:49:38+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-15",
+      "matchup": "MIL @ LAD",
+      "pick": "LAD",
+      "pick_full": "Los Angeles Dodgers",
+      "price": 110,
+      "decimal": 2.1,
+      "model_prob": 0.4966,
+      "market_prob": 0.4564,
+      "edge_pct": 4.02,
+      "published_at": "2026-08-15T07:49:38+00:00",
       "settled": false,
       "won": null,
       "score": null,
