@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-15T16:49:38+00:00",
+  "generated_at": "2026-08-15T17:35:14+00:00",
   "registration": {
     "ref": "DEC-ML-003",
     "status": "open",
@@ -26,9 +26,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 126,
+    "published": 127,
     "graded": 4,
-    "pending": 3,
+    "pending": 4,
     "wins": 2,
     "losses": 2,
     "units": 0.567,
@@ -2186,6 +2186,23 @@
       "market_prob": 0.4564,
       "edge_pct": 4.02,
       "published_at": "2026-08-15T07:49:38+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-15",
+      "matchup": "BOS @ PIT",
+      "pick": "BOS",
+      "pick_full": "Boston Red Sox",
+      "price": -112,
+      "decimal": 1.893,
+      "model_prob": 0.5589,
+      "market_prob": 0.5167,
+      "edge_pct": 4.22,
+      "published_at": "2026-08-15T17:34:02+00:00",
       "settled": false,
       "won": null,
       "score": null,
