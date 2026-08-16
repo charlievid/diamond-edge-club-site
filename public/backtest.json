@@ -1,7 +1,7 @@
 {
   "kind": "backtest",
   "bets_placed": 0,
-  "generated_at": "2026-08-15T23:05:19+00:00",
+  "generated_at": "2026-08-16T01:50:00+00:00",
   "params": {
     "ref": "DEC-ML-003",
     "min_decimal": 1.8,
@@ -19,17 +19,17 @@
       2025,
       2026
     ],
-    "bets": 957,
-    "wins": 476,
+    "bets": 958,
+    "wins": 477,
     "losses": 481,
-    "win_pct": 49.7,
+    "win_pct": 49.8,
     "breakeven_pct": 43.5,
-    "margin": 6.27,
-    "roi_pct": 15.19,
-    "units": 145.36,
-    "pl": 14535.91,
-    "ci90_lo": 9.33,
-    "ci90_hi": 21.12,
+    "margin": 6.31,
+    "roi_pct": 15.27,
+    "units": 146.32,
+    "pl": 14632.06,
+    "ci90_lo": 9.3,
+    "ci90_hi": 21.27,
     "p_positive": 1.0
   },
   "other_windows": [
@@ -16195,24 +16195,24 @@
     {
       "season": 2026,
       "summary": {
-        "bets": 123,
-        "wins": 68,
+        "bets": 124,
+        "wins": 69,
         "losses": 55,
-        "win_pct": 55.3,
+        "win_pct": 55.6,
         "breakeven_pct": 47.3,
-        "margin": 8.01,
-        "roi_pct": 17.85,
-        "units": 21.96,
-        "pl": 2195.97,
-        "bank_end": 3195.97,
+        "margin": 8.34,
+        "roi_pct": 18.48,
+        "units": 22.92,
+        "pl": 2292.12,
+        "bank_end": 3292.12,
         "bank_peak": 3395.97,
         "bank_trough": 801.09,
         "max_drawdown": 481.49,
-        "avg_price": 2.157,
-        "days_bet": 74,
-        "ci90_lo": 2.5,
-        "ci90_hi": 33.68,
-        "p_positive": 0.9716
+        "avg_price": 2.156,
+        "days_bet": 75,
+        "ci90_lo": 3.19,
+        "ci90_hi": 33.96,
+        "p_positive": 0.9764
       },
       "months": [
         {
@@ -16256,16 +16256,16 @@
         },
         {
           "month": "2026-08",
-          "bets": 19,
-          "wins": 11,
+          "bets": 20,
+          "wins": 12,
           "losses": 8,
-          "win_pct": 57.9,
-          "breakeven_pct": 43.4,
-          "margin": 14.51,
-          "roi_pct": 35.5,
-          "units": 6.74,
-          "pl": 674.47,
-          "bank_end": 3195.97
+          "win_pct": 60.0,
+          "breakeven_pct": 43.8,
+          "margin": 16.24,
+          "roi_pct": 38.53,
+          "units": 7.71,
+          "pl": 770.62,
+          "bank_end": 3292.12
         }
       ],
       "equity": [
@@ -16888,6 +16888,11 @@
           "i": 123,
           "bank": 3195.97,
           "date": "2026-08-14"
+        },
+        {
+          "i": 124,
+          "bank": 3292.12,
+          "date": "2026-08-15"
         }
       ],
       "picks": [
@@ -18612,6 +18617,20 @@
           "won": false,
           "pl": -100.0,
           "bank": 3195.97
+        },
+        {
+          "date": "2026-08-15",
+          "matchup": "MIA @ CIN",
+          "pick": "MIA",
+          "american": -104,
+          "decimal": 1.962,
+          "model_prob": 0.5512,
+          "fair_prob": 0.4977,
+          "edge": 0.0536,
+          "score": "8-4",
+          "won": true,
+          "pl": 96.15,
+          "bank": 3292.12
         }
       ]
     }
