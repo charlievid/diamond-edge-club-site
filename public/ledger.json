@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-16T13:04:29+00:00",
+  "generated_at": "2026-08-16T15:18:47+00:00",
   "registration": {
     "ref": "DEC-ML-003",
     "status": "open",
@@ -26,9 +26,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 127,
+    "published": 129,
     "graded": 8,
-    "pending": 0,
+    "pending": 2,
     "wins": 5,
     "losses": 3,
     "units": 2.611,
@@ -2207,6 +2207,40 @@
       "won": true,
       "score": "4-0",
       "profit_units": 0.893,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-16",
+      "matchup": "AZ @ ATL",
+      "pick": "AZ",
+      "pick_full": "Arizona Diamondbacks",
+      "price": 112,
+      "decimal": 2.12,
+      "model_prob": 0.5051,
+      "market_prob": 0.461,
+      "edge_pct": 4.41,
+      "published_at": "2026-08-16T15:18:10+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "date": "2026-08-16",
+      "matchup": "MIA @ CIN",
+      "pick": "MIA",
+      "pick_full": "Miami Marlins",
+      "price": -120,
+      "decimal": 1.833,
+      "model_prob": 0.5748,
+      "market_prob": 0.5327,
+      "edge_pct": 4.2,
+      "published_at": "2026-08-16T15:18:10+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
       "simulated": false
     }
   ]
