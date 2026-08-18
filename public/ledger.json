@@ -1,15 +1,73 @@
 {
-  "generated_at": "2026-08-18T03:52:49+00:00",
+  "generated_at": "2026-08-18T04:56:19+00:00",
   "registration": {
-    "ref": "DEC-ML-003",
+    "ref": "DEC-ML-004",
     "status": "open",
-    "registered_at": "2026-08-12T07:57:54+00:00",
-    "rule": "FULL-GAME MONEYLINE. For every side of every game with a two-sided closing moneyline, compute a win probability from an L2 logistic regression (scikit-learn LogisticRegression, C=0.05, max_iter=3000) whose features are: (1) logit of the WORST-CASE de-vigged market fair probability, entered directly and unscaled, so the factors are only ever credited with what they add to the market line; plus (2) twenty standardised point-in-time factor edges, all oriented 'our side minus theirs' - eleven classic (sp_fip, sp_whip, bp_era, bp_whip, bp_fip, bp_fatigue, off, travel, rest, is_home, park_factor) and nine Statcast (sp_xwoba, sp_barrel, sp_hardhit, sp_whiff, sp_gb, off_xwoba, off_barrel, off_hardhit, off_whiff). Features are built by ml_features.py and ml_features_statcast.py, which compute every value from games STRICTLY BEFORE the game being priced. The model is REFIT ON THE FIRST OF EVERY MONTH on all prior seasons plus the current season to date, and is frozen for that month. Bet the side where model probability minus worst-case fair probability is largest. If no game clears the threshold, publish nothing. OPENING-MONTH EXCLUSION (the change from DEC-ML-002): NO BET IS PLACED IN THE FIRST CALENDAR MONTH OF ANY SEASON. Games through 30 April are used to accumulate season-to-date rates and are never bet. Rationale, as specified before any test was run: the features are season-to-date rates shrunk toward the prior season, so in April the model is largely pricing last year's rosters and cannot see injuries, trades or draft changes. Measured: April went 46-90 for -15.08% across 2023-2026 while the remaining months returned +6.36% on the same model.",
-    "threshold": "PRICE BAND: decimal odds >= 1.80 (American -125 or longer). NO UPPER CAP - the rule is explicitly permitted to bet underdogs of any length, and imposing a +130 ceiling was measured to destroy the edge (2025: -0.20% to -4.07% capped, vs +11.47% uncapped). EDGE THRESHOLD: not a fixed number. On each monthly refit the threshold is set by BISECTION ON THE FIT DATA ONLY so that the rule would have averaged 2.0 picks per day over that fit window, capped at 4 picks per day, with no minimum. Volume is the calibration target; profit is never used to set the threshold. DE-VIG: the fair probability is the LEAST FAVOURABLE (maximum) of proportional, power and Shin, on the six-book consensus. The threshold is still calibrated on the fit window only, and the fit window MAY include April games \u2014 excluding April governs which games are BET, not which are learned from. Discarding April from training would throw away information the model legitimately has.",
-    "stake_rule": "Flat 1 unit per pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing. Explicitly NO escalating unit ladder: the ladder was simulated on this project's own data and busted a $100 bankroll in July on a -4.63% strategy. Unit size may only change between graded samples, never inside one.",
-    "sample_size": "Graded over 600 bets OR 150 calendar days of BETTABLE season (May onward), WHICHEVER IS LATER. No profitability claim, no marketing of a record, and no paid picks product before that gate is met. PRE-COMMITTED FAILURE CONDITION, unchanged from DEC-ML-002: if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed \u2014 not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING: consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward and updated: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band was chosen on 2024 and validated on 2025 \u2014 one out-of-sample test deep, not many; (c) THE 2012-2021 TEST IS NEGATIVE: -3.67% over 2,536 bets, CI90 [-7.49, +0.08], 2 of 9 seasons positive. This is the largest sample any version has faced and it does not support the rule. It can only run the 11 classic factors because Statcast begins in 2021, so it cannot separate 'the approach fails in that era' from 'the approach needs Statcast'; the 11-vs-20-factor gap on recent seasons (+6.36% vs +14.64%) favours the second reading, but that is an interpretation, not a finding; (d) it carries a LOSING win-loss record and profits only because the average price is around +140 against a low-40s breakeven; (e) it contradicts the brand owner's stated +130 underdog ceiling; (f) 2022-2025 odds are a consensus archive, not a verified sharp close; (g) 2026 odds come from checkbestodds screenshots, book set unknown, measured hold ~6.0% vs 4.33% consensus, CLOSING-ONLY so no CLV is possible; (h) STATCAST IS UNAVAILABLE FOR 2026, so the registered 20-factor model CANNOT CURRENTLY BE RUN LIVE. Until Statcast is ingested, any 2026 result is the reduced 11-factor version, whose CI90 still includes zero."
+    "registered_at": "2026-08-18T04:46:23+00:00",
+    "rule": "FULL-GAME MONEYLINE. Identical in every respect to DEC-ML-003 -- same L2 logistic regression (scikit-learn LogisticRegression, C=0.05, max_iter=3000), same feature set (logit of the worst-case de-vigged market fair probability entered directly and unscaled, plus the same twenty standardised point-in-time factor edges: eleven classic and nine Statcast), same strictly-prior feature construction, same monthly refit on the first of the month frozen for that month, same opening-month exclusion (no bet before 1 May). THE ONE CHANGE, AND ITS EXACT FORM: a PLACEMENT VETO on long prices. Selection is UNCHANGED. Every candidate at decimal >= 1.80 still enters the pool, still informs the monthly threshold bisection, and is still ranked by edge; the day's up-to-four picks are chosen exactly as in DEC-ML-003. THEN, and only then, any selected pick priced at decimal >= 3.00 (American +200 or longer) is DECLINED and its slot GOES UNUSED. It is NOT backfilled by the next candidate down, and the threshold is NOT recalibrated on a capped pool. THIS DISTINCTION IS LOAD-BEARING AND WAS MEASURED. Capping the BAND -- which recalibrates the threshold on a capped fit pool and backfills the freed slot -- returned +13.98%, BELOW the uncapped +14.97%. Declining at PLACEMENT returned +16.47% over the same months. A future implementer who 'simplifies' this into a band filter will silently revert the change to a worse rule than doing nothing.",
+    "threshold": "PRICE BAND (unchanged from DEC-ML-003): decimal odds >= 1.80 (American -125 or longer), NO UPPER CAP ON THE BAND. Long prices remain candidates and remain in the threshold calibration. PLACEMENT VETO (the change): a selected pick at decimal >= 3.00 (American +200 or longer) is not placed. WHY +200 AND NOT SOME OTHER NUMBER: measured on 7,766 out-of-sample candidates scored walk-forward, the model's probability error changes SIGN at +200. Disjoint buckets: +150 to +180 = -1.9 (conservative), +180 to +200 = -3.8 (most conservative on the board), +200 to +260 = +4.6 (overconfident), +260 and longer = +7.1. Below +200 the model understates and is safe; at +200 it starts inflating exactly where the market is ALREADY inflated (+3.2 and +4.8 in those two buckets), so edge = p_model - fair_wc is manufactured from the model's own error and the largest reported edges sit where the estimate is least reliable. The boundary was NOT swept for the best-performing cutoff and must not be. EDGE THRESHOLD (unchanged): set on each monthly refit by bisection on the FIT DATA ONLY so the rule would have averaged 2.0 picks per day over the fit window, capped at 4 per day, no minimum. Volume is the calibration target; profit is never used to set the threshold. DE-VIG (unchanged): the least favourable (maximum) of proportional, power and Shin.",
+    "stake_rule": "Flat 1 unit per PLACED pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing, no escalating unit ladder. A vetoed pick stakes NOTHING -- the unit is not redeployed onto another game, which is the whole point of declining at placement rather than capping the band. Unit size may only change between graded samples, never inside one.",
+    "sample_size": "Graded over 600 bets OR 150 calendar days, WHICHEVER IS LATER, counted from this registration. The 12 picks recorded under DEC-ML-003 do NOT carry over: they were placed under a different rule and pooling them would be the retrofit this project exists to avoid. DEC-ML-003's ledger stands closed and unaltered as its own record. PRE-COMMITTED FAILURE CONDITION (unchanged): if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed -- not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING (unchanged): consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward from DEC-ML-003: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band is one out-of-sample test deep; (c) it lost in 2022; (d) it carries a LOSING win-loss record and profits only because the average price beats the breakeven; (e) historical odds provenance for 2022-2025 is a consensus archive, not a verified sharp close. || NEW WEAKNESSES SPECIFIC TO THIS REGISTRATION, filed up front so they cannot be discovered later and explained away: (f) THE VETO WAS CHOSEN AFTER SEEING WHICH PRICE BUCKET LOST. It rests on 96 vetoed bets in the full record and 64 in the 15-month test window. (g) IT REVERSES A DELIBERATE PRE-REGISTERED CHOICE. DEC-ML-003 stated 'NO UPPER CAP' with a measured rationale (a +130 ceiling destroyed the edge in 2025) and listed as weakness (e) that this contradicted the brand owner's own +130 price discipline. This change moves BACK toward the owner's prior instinct, which is precisely the direction a degrees-of-freedom error would take. (h) DRAWDOWN IS WORSE, NOT BETTER. Max drawdown at flat $100 is -$1,494 capped against -$1,287 uncapped. The episodes differ in shape (12 days against 286) but this rule must never be described as risk reduction; it deploys less capital, it is not less volatile. (i) FIVE VARIANTS WERE TESTED ON THE SAME 7,766 OUT-OF-SAMPLE ROWS (uncapped, band-cap with backfill, global recalibration, tail correction from +180, tail correction from +200). The multiple-comparison budget is spent; no further variant may be run against this data. (j) 2023 ARGUES AGAINST THE VETO (-$992 on the full-period cut); only 2024-2026 support it. || WHAT WOULD FALSIFY THIS: the veto's case is that +200 and longer holds no exploitable edge for anyone. If forward results show vetoed candidates winning at or above their de-vigged market probability over a meaningful sample, the veto is wrong and is withdrawn."
   },
+  "registrations": [
+    {
+      "ref": "DEC-ML-003",
+      "status": "superseded by DEC-ML-004: long-price placement veto: the model's probability error changes sign at +200, measured on 7,766 out-of-sample candidates",
+      "is_current": false,
+      "registered_at": "2026-08-12T07:57:54+00:00",
+      "rule": "FULL-GAME MONEYLINE. For every side of every game with a two-sided closing moneyline, compute a win probability from an L2 logistic regression (scikit-learn LogisticRegression, C=0.05, max_iter=3000) whose features are: (1) logit of the WORST-CASE de-vigged market fair probability, entered directly and unscaled, so the factors are only ever credited with what they add to the market line; plus (2) twenty standardised point-in-time factor edges, all oriented 'our side minus theirs' - eleven classic (sp_fip, sp_whip, bp_era, bp_whip, bp_fip, bp_fatigue, off, travel, rest, is_home, park_factor) and nine Statcast (sp_xwoba, sp_barrel, sp_hardhit, sp_whiff, sp_gb, off_xwoba, off_barrel, off_hardhit, off_whiff). Features are built by ml_features.py and ml_features_statcast.py, which compute every value from games STRICTLY BEFORE the game being priced. The model is REFIT ON THE FIRST OF EVERY MONTH on all prior seasons plus the current season to date, and is frozen for that month. Bet the side where model probability minus worst-case fair probability is largest. If no game clears the threshold, publish nothing. OPENING-MONTH EXCLUSION (the change from DEC-ML-002): NO BET IS PLACED IN THE FIRST CALENDAR MONTH OF ANY SEASON. Games through 30 April are used to accumulate season-to-date rates and are never bet. Rationale, as specified before any test was run: the features are season-to-date rates shrunk toward the prior season, so in April the model is largely pricing last year's rosters and cannot see injuries, trades or draft changes. Measured: April went 46-90 for -15.08% across 2023-2026 while the remaining months returned +6.36% on the same model.",
+      "threshold": "PRICE BAND: decimal odds >= 1.80 (American -125 or longer). NO UPPER CAP - the rule is explicitly permitted to bet underdogs of any length, and imposing a +130 ceiling was measured to destroy the edge (2025: -0.20% to -4.07% capped, vs +11.47% uncapped). EDGE THRESHOLD: not a fixed number. On each monthly refit the threshold is set by BISECTION ON THE FIT DATA ONLY so that the rule would have averaged 2.0 picks per day over that fit window, capped at 4 picks per day, with no minimum. Volume is the calibration target; profit is never used to set the threshold. DE-VIG: the fair probability is the LEAST FAVOURABLE (maximum) of proportional, power and Shin, on the six-book consensus. The threshold is still calibrated on the fit window only, and the fit window MAY include April games \u2014 excluding April governs which games are BET, not which are learned from. Discarding April from training would throw away information the model legitimately has.",
+      "stake_rule": "Flat 1 unit per pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing. Explicitly NO escalating unit ladder: the ladder was simulated on this project's own data and busted a $100 bankroll in July on a -4.63% strategy. Unit size may only change between graded samples, never inside one.",
+      "sample_size": "Graded over 600 bets OR 150 calendar days of BETTABLE season (May onward), WHICHEVER IS LATER. No profitability claim, no marketing of a record, and no paid picks product before that gate is met. PRE-COMMITTED FAILURE CONDITION, unchanged from DEC-ML-002: if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed \u2014 not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING: consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward and updated: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band was chosen on 2024 and validated on 2025 \u2014 one out-of-sample test deep, not many; (c) THE 2012-2021 TEST IS NEGATIVE: -3.67% over 2,536 bets, CI90 [-7.49, +0.08], 2 of 9 seasons positive. This is the largest sample any version has faced and it does not support the rule. It can only run the 11 classic factors because Statcast begins in 2021, so it cannot separate 'the approach fails in that era' from 'the approach needs Statcast'; the 11-vs-20-factor gap on recent seasons (+6.36% vs +14.64%) favours the second reading, but that is an interpretation, not a finding; (d) it carries a LOSING win-loss record and profits only because the average price is around +140 against a low-40s breakeven; (e) it contradicts the brand owner's stated +130 underdog ceiling; (f) 2022-2025 odds are a consensus archive, not a verified sharp close; (g) 2026 odds come from checkbestodds screenshots, book set unknown, measured hold ~6.0% vs 4.33% consensus, CLOSING-ONLY so no CLV is possible; (h) STATCAST IS UNAVAILABLE FOR 2026, so the registered 20-factor model CANNOT CURRENTLY BE RUN LIVE. Until Statcast is ingested, any 2026 result is the reduced 11-factor version, whose CI90 still includes zero.",
+      "live": {
+        "bets": 13,
+        "wins": 6,
+        "losses": 7,
+        "units": -0.556,
+        "roi_pct": -4.27
+      },
+      "gate": {
+        "bets_required": 600,
+        "days_required": 150,
+        "bets_graded": 13,
+        "days_elapsed": 5,
+        "met": false,
+        "claim_permitted": false
+      }
+    },
+    {
+      "ref": "DEC-ML-004",
+      "status": "open",
+      "is_current": true,
+      "registered_at": "2026-08-18T04:46:23+00:00",
+      "rule": "FULL-GAME MONEYLINE. Identical in every respect to DEC-ML-003 -- same L2 logistic regression (scikit-learn LogisticRegression, C=0.05, max_iter=3000), same feature set (logit of the worst-case de-vigged market fair probability entered directly and unscaled, plus the same twenty standardised point-in-time factor edges: eleven classic and nine Statcast), same strictly-prior feature construction, same monthly refit on the first of the month frozen for that month, same opening-month exclusion (no bet before 1 May). THE ONE CHANGE, AND ITS EXACT FORM: a PLACEMENT VETO on long prices. Selection is UNCHANGED. Every candidate at decimal >= 1.80 still enters the pool, still informs the monthly threshold bisection, and is still ranked by edge; the day's up-to-four picks are chosen exactly as in DEC-ML-003. THEN, and only then, any selected pick priced at decimal >= 3.00 (American +200 or longer) is DECLINED and its slot GOES UNUSED. It is NOT backfilled by the next candidate down, and the threshold is NOT recalibrated on a capped pool. THIS DISTINCTION IS LOAD-BEARING AND WAS MEASURED. Capping the BAND -- which recalibrates the threshold on a capped fit pool and backfills the freed slot -- returned +13.98%, BELOW the uncapped +14.97%. Declining at PLACEMENT returned +16.47% over the same months. A future implementer who 'simplifies' this into a band filter will silently revert the change to a worse rule than doing nothing.",
+      "threshold": "PRICE BAND (unchanged from DEC-ML-003): decimal odds >= 1.80 (American -125 or longer), NO UPPER CAP ON THE BAND. Long prices remain candidates and remain in the threshold calibration. PLACEMENT VETO (the change): a selected pick at decimal >= 3.00 (American +200 or longer) is not placed. WHY +200 AND NOT SOME OTHER NUMBER: measured on 7,766 out-of-sample candidates scored walk-forward, the model's probability error changes SIGN at +200. Disjoint buckets: +150 to +180 = -1.9 (conservative), +180 to +200 = -3.8 (most conservative on the board), +200 to +260 = +4.6 (overconfident), +260 and longer = +7.1. Below +200 the model understates and is safe; at +200 it starts inflating exactly where the market is ALREADY inflated (+3.2 and +4.8 in those two buckets), so edge = p_model - fair_wc is manufactured from the model's own error and the largest reported edges sit where the estimate is least reliable. The boundary was NOT swept for the best-performing cutoff and must not be. EDGE THRESHOLD (unchanged): set on each monthly refit by bisection on the FIT DATA ONLY so the rule would have averaged 2.0 picks per day over the fit window, capped at 4 per day, no minimum. Volume is the calibration target; profit is never used to set the threshold. DE-VIG (unchanged): the least favourable (maximum) of proportional, power and Shin.",
+      "stake_rule": "Flat 1 unit per PLACED pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing, no escalating unit ladder. A vetoed pick stakes NOTHING -- the unit is not redeployed onto another game, which is the whole point of declining at placement rather than capping the band. Unit size may only change between graded samples, never inside one.",
+      "sample_size": "Graded over 600 bets OR 150 calendar days, WHICHEVER IS LATER, counted from this registration. The 12 picks recorded under DEC-ML-003 do NOT carry over: they were placed under a different rule and pooling them would be the retrofit this project exists to avoid. DEC-ML-003's ledger stands closed and unaltered as its own record. PRE-COMMITTED FAILURE CONDITION (unchanged): if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed -- not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING (unchanged): consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward from DEC-ML-003: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band is one out-of-sample test deep; (c) it lost in 2022; (d) it carries a LOSING win-loss record and profits only because the average price beats the breakeven; (e) historical odds provenance for 2022-2025 is a consensus archive, not a verified sharp close. || NEW WEAKNESSES SPECIFIC TO THIS REGISTRATION, filed up front so they cannot be discovered later and explained away: (f) THE VETO WAS CHOSEN AFTER SEEING WHICH PRICE BUCKET LOST. It rests on 96 vetoed bets in the full record and 64 in the 15-month test window. (g) IT REVERSES A DELIBERATE PRE-REGISTERED CHOICE. DEC-ML-003 stated 'NO UPPER CAP' with a measured rationale (a +130 ceiling destroyed the edge in 2025) and listed as weakness (e) that this contradicted the brand owner's own +130 price discipline. This change moves BACK toward the owner's prior instinct, which is precisely the direction a degrees-of-freedom error would take. (h) DRAWDOWN IS WORSE, NOT BETTER. Max drawdown at flat $100 is -$1,494 capped against -$1,287 uncapped. The episodes differ in shape (12 days against 286) but this rule must never be described as risk reduction; it deploys less capital, it is not less volatile. (i) FIVE VARIANTS WERE TESTED ON THE SAME 7,766 OUT-OF-SAMPLE ROWS (uncapped, band-cap with backfill, global recalibration, tail correction from +180, tail correction from +200). The multiple-comparison budget is spent; no further variant may be run against this data. (j) 2023 ARGUES AGAINST THE VETO (-$992 on the full-period cut); only 2024-2026 support it. || WHAT WOULD FALSIFY THIS: the veto's case is that +200 and longer holds no exploitable edge for anyone. If forward results show vetoed candidates winning at or above their de-vigged market probability over a meaningful sample, the veto is wrong and is withdrawn.",
+      "live": {
+        "bets": 0,
+        "wins": 0,
+        "losses": 0,
+        "units": 0.0,
+        "roi_pct": null
+      },
+      "gate": {
+        "bets_required": 600,
+        "days_required": 150,
+        "bets_graded": 0,
+        "days_elapsed": 0,
+        "met": false,
+        "claim_permitted": false
+      }
+    }
+  ],
   "findings": [
+    {
+      "date": "2026-08-18",
+      "corrects": "DEC-ML-003 threshold: 'NO UPPER CAP'",
+      "title": "The rule now declines bets at +200 or longer \u2014 and this was decided after seeing which prices lost",
+      "body": "DEC-ML-003 stated NO UPPER CAP, with a reason: a +130 ceiling was measured to destroy the edge. It also listed as a known weakness that this contradicted the brand owner's own price discipline. DEC-ML-004 now DECLINES any selected pick priced +200 or longer. That is a reversal, in the direction the owner originally preferred, reached by analysis run after the results were visible \u2014 which is precisely the shape a wishful-thinking error takes, so it is stated here rather than buried. WHAT WAS MEASURED: on 7,766 candidates scored walk-forward and never used to fit the model that scored them, the model's probability error CHANGES SIGN at +200. Below it the model understates (+150 to +180: 1.9 points low; +180 to +200: 3.8 points low). At and above it the model overstates (+200 to +260: 4.6 points high; +260 and longer: 7.1 points high) \u2014 and it overstates in the same direction the market already does, so the reported 'edge' at long prices is partly manufactured by the model's own error. That is why the biggest edges on the card kept appearing on the longest prices. WHAT WAS TRIED AND FAILED: capping the price BAND instead (which backfills the freed slot) returned LESS than no cap at all. A global recalibration of the model returned less again. A tail-only correction starting at +180 was the worst of the five. A tail-only correction starting at +200 repaired the calibration almost entirely and STILL lost to simply declining the bets \u2014 which is the strongest evidence for the rule, because it says there is no edge left in that price range for even a well-calibrated model to find. WHAT THIS DOES NOT CLAIM: it is not risk reduction. Maximum drawdown is WORSE with the veto than without it. The change rests on 96 declined bets, 2023 argues against it, and five variants were tested against the same data, so the multiple-comparison budget is spent. The 13 bets recorded under DEC-ML-003 do NOT carry over: that rule is closed, its record stands unaltered above, and DEC-ML-004 starts its 600-bet gate from zero. WHAT WOULD FALSIFY IT: if declined candidates go on to win at or above their de-vigged market probability over a meaningful forward sample, the veto is wrong and gets withdrawn."
+    },
     {
       "date": "2026-08-13",
       "corrects": "known weakness (c)",
@@ -20,19 +78,19 @@
   "gate": {
     "bets_required": 600,
     "days_required": 150,
-    "bets_graded": 13,
-    "days_elapsed": 77,
+    "bets_graded": 0,
+    "days_elapsed": 0,
     "met": false,
     "claim_permitted": false
   },
   "summary": {
     "published": 132,
-    "graded": 13,
+    "graded": 0,
     "pending": 0,
-    "wins": 6,
-    "losses": 7,
-    "units": -0.556,
-    "roi_pct": -4.27
+    "wins": 0,
+    "losses": 0,
+    "units": 0.0,
+    "roi_pct": null
   },
   "season": {
     "bets": 132,
@@ -42,11 +100,11 @@
     "roi_pct": 32.03
   },
   "live": {
-    "bets": 13,
-    "wins": 6,
-    "losses": 7,
-    "units": -0.556,
-    "roi_pct": -4.28
+    "bets": 0,
+    "wins": 0,
+    "losses": 0,
+    "units": 0,
+    "roi_pct": null
   },
   "simulated_count": 119,
   "picks": [
@@ -2057,6 +2115,7 @@
       "simulated": true
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-12",
       "matchup": "PIT @ MIA",
       "pick": "MIA",
@@ -2091,6 +2150,7 @@
       "simulated": true
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-14",
       "matchup": "MIA @ CIN",
       "pick": "MIA",
@@ -2108,6 +2168,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-14",
       "matchup": "AZ @ ATL",
       "pick": "AZ",
@@ -2125,6 +2186,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-14",
       "matchup": "BOS @ PIT",
       "pick": "BOS",
@@ -2142,6 +2204,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-15",
       "matchup": "MIA @ CIN",
       "pick": "MIA",
@@ -2159,6 +2222,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-15",
       "matchup": "AZ @ ATL",
       "pick": "AZ",
@@ -2176,6 +2240,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-15",
       "matchup": "MIL @ LAD",
       "pick": "LAD",
@@ -2193,6 +2258,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-15",
       "matchup": "BOS @ PIT",
       "pick": "BOS",
@@ -2210,6 +2276,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-16",
       "matchup": "AZ @ ATL",
       "pick": "AZ",
@@ -2227,6 +2294,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-16",
       "matchup": "MIA @ CIN",
       "pick": "MIA",
@@ -2244,6 +2312,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-17",
       "matchup": "MIA @ PHI",
       "pick": "MIA",
@@ -2261,6 +2330,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-17",
       "matchup": "LAD @ COL",
       "pick": "COL",
@@ -2278,6 +2348,7 @@
       "simulated": false
     },
     {
+      "prereg_ref": "DEC-ML-003",
       "date": "2026-08-17",
       "matchup": "ATH @ KC",
       "pick": "ATH",
