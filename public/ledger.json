@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T20:04:12+00:00",
+  "generated_at": "2026-08-18T03:14:18+00:00",
   "registration": {
     "ref": "DEC-ML-003",
     "status": "open",
@@ -20,33 +20,33 @@
   "gate": {
     "bets_required": 600,
     "days_required": 150,
-    "bets_graded": 10,
-    "days_elapsed": 76,
+    "bets_graded": 12,
+    "days_elapsed": 77,
     "met": false,
     "claim_permitted": false
   },
   "summary": {
     "published": 132,
-    "graded": 10,
-    "pending": 3,
+    "graded": 12,
+    "pending": 1,
     "wins": 6,
-    "losses": 4,
-    "units": 2.444,
-    "roi_pct": 24.44
+    "losses": 6,
+    "units": 0.444,
+    "roi_pct": 3.7
   },
   "season": {
-    "bets": 129,
+    "bets": 131,
     "wins": 72,
-    "losses": 57,
-    "units": 45.274,
-    "roi_pct": 35.1
+    "losses": 59,
+    "units": 43.274,
+    "roi_pct": 33.03
   },
   "live": {
-    "bets": 10,
+    "bets": 12,
     "wins": 6,
-    "losses": 4,
-    "units": 2.444,
-    "roi_pct": 24.44
+    "losses": 6,
+    "units": 0.444,
+    "roi_pct": 3.7
   },
   "simulated_count": 119,
   "picks": [
@@ -2254,10 +2254,10 @@
       "market_prob": 0.3159,
       "edge_pct": 7.54,
       "published_at": "2026-08-17T06:15:22+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": false,
+      "score": "5-6",
+      "profit_units": -1.0,
       "simulated": false
     },
     {
@@ -2288,10 +2288,10 @@
       "market_prob": 0.3694,
       "edge_pct": 4.84,
       "published_at": "2026-08-17T06:15:22+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": false,
+      "score": "5-9",
+      "profit_units": -1.0,
       "simulated": false
     }
   ]
