@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T05:22:52+00:00",
+  "generated_at": "2026-08-18T15:20:55+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -84,9 +84,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 134,
+    "published": 135,
     "graded": 0,
-    "pending": 2,
+    "pending": 3,
     "wins": 0,
     "losses": 0,
     "units": 0.0,
@@ -2395,6 +2395,24 @@
       "market_prob": 0.4357,
       "edge_pct": 4.42,
       "published_at": "2026-08-18T05:22:40+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-18",
+      "matchup": "MIA @ PHI",
+      "pick": "MIA",
+      "pick_full": "Miami Marlins",
+      "price": 194,
+      "decimal": 2.94,
+      "model_prob": 0.3905,
+      "market_prob": 0.331,
+      "edge_pct": 5.95,
+      "published_at": "2026-08-18T15:20:15+00:00",
       "settled": false,
       "won": null,
       "score": null,
