@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T04:56:19+00:00",
+  "generated_at": "2026-08-18T05:22:52+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -84,9 +84,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 132,
+    "published": 134,
     "graded": 0,
-    "pending": 0,
+    "pending": 2,
     "wins": 0,
     "losses": 0,
     "units": 0.0,
@@ -2363,6 +2363,42 @@
       "won": false,
       "score": "5-9",
       "profit_units": -1.0,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-18",
+      "matchup": "LAD @ COL",
+      "pick": "COL",
+      "pick_full": "Colorado Rockies",
+      "price": 157,
+      "decimal": 2.57,
+      "model_prob": 0.42,
+      "market_prob": 0.3752,
+      "edge_pct": 4.47,
+      "published_at": "2026-08-18T05:22:40+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-18",
+      "matchup": "DET @ PIT",
+      "pick": "DET",
+      "pick_full": "Detroit Tigers",
+      "price": 122,
+      "decimal": 2.22,
+      "model_prob": 0.48,
+      "market_prob": 0.4357,
+      "edge_pct": 4.42,
+      "published_at": "2026-08-18T05:22:40+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
       "simulated": false
     }
   ]
