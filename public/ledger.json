@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T17:35:00+00:00",
+  "generated_at": "2026-08-19T20:05:24+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -99,9 +99,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 139,
+    "published": 140,
     "graded": 3,
-    "pending": 3,
+    "pending": 4,
     "wins": 0,
     "losses": 3,
     "units": -3.0,
@@ -2638,6 +2638,25 @@
       "market_prob": 0.4576,
       "edge_pct": 4.57,
       "published_at": "2026-08-19T04:05:09+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "outcome": null,
+      "date": "2026-08-19",
+      "matchup": "ATH @ KC",
+      "pick": "ATH",
+      "pick_full": "Athletics",
+      "price": 144,
+      "decimal": 2.44,
+      "model_prob": 0.4392,
+      "market_prob": 0.3986,
+      "edge_pct": 4.06,
+      "published_at": "2026-08-19T20:04:33+00:00",
       "settled": false,
       "won": null,
       "score": null,
