@@ -1,7 +1,7 @@
 {
   "kind": "backtest",
   "bets_placed": 0,
-  "generated_at": "2026-08-18T17:34:55+00:00",
+  "generated_at": "2026-08-19T04:06:25+00:00",
   "params": {
     "ref": "DEC-ML-003",
     "min_decimal": 1.8,
@@ -19,17 +19,17 @@
       2025,
       2026
     ],
-    "bets": 964,
+    "bets": 968,
     "wins": 479,
-    "losses": 485,
-    "win_pct": 49.7,
+    "losses": 489,
+    "win_pct": 49.5,
     "breakeven_pct": 43.5,
-    "margin": 6.22,
-    "roi_pct": 14.97,
-    "units": 144.3,
-    "pl": 14430.4,
-    "ci90_lo": 8.96,
-    "ci90_hi": 20.95,
+    "margin": 6.03,
+    "roi_pct": 14.49,
+    "units": 140.3,
+    "pl": 14030.4,
+    "ci90_lo": 8.76,
+    "ci90_hi": 20.46,
     "p_positive": 1.0
   },
   "other_windows": [
@@ -16195,24 +16195,24 @@
     {
       "season": 2026,
       "summary": {
-        "bets": 130,
+        "bets": 134,
         "wins": 71,
-        "losses": 59,
-        "win_pct": 54.6,
-        "breakeven_pct": 47.0,
-        "margin": 7.58,
-        "roi_pct": 16.08,
-        "units": 20.9,
-        "pl": 2090.45,
-        "bank_end": 3090.45,
+        "losses": 63,
+        "win_pct": 53.0,
+        "breakeven_pct": 46.8,
+        "margin": 6.17,
+        "roi_pct": 12.62,
+        "units": 16.9,
+        "pl": 1690.45,
+        "bank_end": 2690.45,
         "bank_peak": 3407.12,
         "bank_trough": 801.09,
-        "max_drawdown": 481.49,
-        "avg_price": 2.173,
-        "days_bet": 77,
-        "ci90_lo": 0.41,
-        "ci90_hi": 31.76,
-        "p_positive": 0.9537
+        "max_drawdown": 716.67,
+        "avg_price": 2.184,
+        "days_bet": 78,
+        "ci90_lo": -3.03,
+        "ci90_hi": 28.63,
+        "p_positive": 0.9022
       },
       "months": [
         {
@@ -16256,16 +16256,16 @@
         },
         {
           "month": "2026-08",
-          "bets": 26,
+          "bets": 30,
           "wins": 14,
-          "losses": 12,
-          "win_pct": 53.8,
-          "breakeven_pct": 43.2,
-          "margin": 10.63,
-          "roi_pct": 21.88,
-          "units": 5.69,
-          "pl": 568.96,
-          "bank_end": 3090.45
+          "losses": 16,
+          "win_pct": 46.7,
+          "breakeven_pct": 42.8,
+          "margin": 3.91,
+          "roi_pct": 5.63,
+          "units": 1.69,
+          "pl": 168.96,
+          "bank_end": 2690.45
         }
       ],
       "equity": [
@@ -16923,6 +16923,26 @@
           "i": 130,
           "bank": 3090.45,
           "date": "2026-08-17"
+        },
+        {
+          "i": 131,
+          "bank": 2990.45,
+          "date": "2026-08-18"
+        },
+        {
+          "i": 132,
+          "bank": 2890.45,
+          "date": "2026-08-18"
+        },
+        {
+          "i": 133,
+          "bank": 2790.45,
+          "date": "2026-08-18"
+        },
+        {
+          "i": 134,
+          "bank": 2690.45,
+          "date": "2026-08-18"
         }
       ],
       "picks": [
@@ -18745,6 +18765,62 @@
           "won": false,
           "pl": -100.0,
           "bank": 3090.45
+        },
+        {
+          "date": "2026-08-18",
+          "matchup": "ATH @ KC",
+          "pick": "ATH",
+          "american": 136,
+          "decimal": 2.36,
+          "model_prob": 0.478,
+          "fair_prob": 0.412,
+          "edge": 0.066,
+          "score": "3-4",
+          "won": false,
+          "pl": -100.0,
+          "bank": 2990.45
+        },
+        {
+          "date": "2026-08-18",
+          "matchup": "MIA @ PHI",
+          "pick": "MIA",
+          "american": 190,
+          "decimal": 2.9,
+          "model_prob": 0.3948,
+          "fair_prob": 0.3366,
+          "edge": 0.0582,
+          "score": "4-6",
+          "won": false,
+          "pl": -100.0,
+          "bank": 2890.45
+        },
+        {
+          "date": "2026-08-18",
+          "matchup": "LAD @ COL",
+          "pick": "COL",
+          "american": 165,
+          "decimal": 2.65,
+          "model_prob": 0.4144,
+          "fair_prob": 0.3676,
+          "edge": 0.0467,
+          "score": "7-6",
+          "won": false,
+          "pl": -100.0,
+          "bank": 2790.45
+        },
+        {
+          "date": "2026-08-18",
+          "matchup": "DET @ PIT",
+          "pick": "DET",
+          "american": 126,
+          "decimal": 2.26,
+          "model_prob": 0.4763,
+          "fair_prob": 0.4306,
+          "edge": 0.0457,
+          "score": "1-4",
+          "won": false,
+          "pl": -100.0,
+          "bank": 2690.45
         }
       ]
     }

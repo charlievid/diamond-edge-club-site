@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T17:34:14+00:00",
+  "generated_at": "2026-08-19T04:05:48+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -45,17 +45,17 @@
       "stake_rule": "Flat 1 unit per PLACED pick, fixed at publication, never revised. No Kelly, no confidence scaling, no progression, no chasing, no escalating unit ladder. A vetoed pick stakes NOTHING -- the unit is not redeployed onto another game, which is the whole point of declining at placement rather than capping the band. Unit size may only change between graded samples, never inside one.",
       "sample_size": "Graded over 600 bets OR 150 calendar days, WHICHEVER IS LATER, counted from this registration. The 12 picks recorded under DEC-ML-003 do NOT carry over: they were placed under a different rule and pooling them would be the retrofit this project exists to avoid. DEC-ML-003's ledger stands closed and unaltered as its own record. PRE-COMMITTED FAILURE CONDITION (unchanged): if at the gate the day-block bootstrap CI90 lower bound is below zero, the rule is declared UNPROVEN and closed -- not re-tuned, not re-banded, not extended for more data. PRE-COMMITTED REPORTING (unchanged): consensus price is the headline; best-of-six may be shown alongside but never as the headline. || KNOWN WEAKNESSES, carried forward from DEC-ML-003: (a) the rule emerged from a search over ~1,900 configurations, four of which previously looked good and reversed; (b) the 1.80 band is one out-of-sample test deep; (c) it lost in 2022; (d) it carries a LOSING win-loss record and profits only because the average price beats the breakeven; (e) historical odds provenance for 2022-2025 is a consensus archive, not a verified sharp close. || NEW WEAKNESSES SPECIFIC TO THIS REGISTRATION, filed up front so they cannot be discovered later and explained away: (f) THE VETO WAS CHOSEN AFTER SEEING WHICH PRICE BUCKET LOST. It rests on 96 vetoed bets in the full record and 64 in the 15-month test window. (g) IT REVERSES A DELIBERATE PRE-REGISTERED CHOICE. DEC-ML-003 stated 'NO UPPER CAP' with a measured rationale (a +130 ceiling destroyed the edge in 2025) and listed as weakness (e) that this contradicted the brand owner's own +130 price discipline. This change moves BACK toward the owner's prior instinct, which is precisely the direction a degrees-of-freedom error would take. (h) DRAWDOWN IS WORSE, NOT BETTER. Max drawdown at flat $100 is -$1,494 capped against -$1,287 uncapped. The episodes differ in shape (12 days against 286) but this rule must never be described as risk reduction; it deploys less capital, it is not less volatile. (i) FIVE VARIANTS WERE TESTED ON THE SAME 7,766 OUT-OF-SAMPLE ROWS (uncapped, band-cap with backfill, global recalibration, tail correction from +180, tail correction from +200). The multiple-comparison budget is spent; no further variant may be run against this data. (j) 2023 ARGUES AGAINST THE VETO (-$992 on the full-period cut); only 2024-2026 support it. || WHAT WOULD FALSIFY THIS: the veto's case is that +200 and longer holds no exploitable edge for anyone. If forward results show vetoed candidates winning at or above their de-vigged market probability over a meaningful sample, the veto is wrong and is withdrawn.",
       "live": {
-        "bets": 0,
+        "bets": 3,
         "wins": 0,
-        "losses": 0,
-        "units": 0.0,
-        "roi_pct": null
+        "losses": 3,
+        "units": -3.0,
+        "roi_pct": -100.0
       },
       "gate": {
         "bets_required": 600,
         "days_required": 150,
-        "bets_graded": 0,
-        "days_elapsed": 0,
+        "bets_graded": 3,
+        "days_elapsed": 1,
         "met": false,
         "claim_permitted": false
       }
@@ -78,33 +78,33 @@
   "gate": {
     "bets_required": 600,
     "days_required": 150,
-    "bets_graded": 0,
-    "days_elapsed": 0,
+    "bets_graded": 3,
+    "days_elapsed": 1,
     "met": false,
     "claim_permitted": false
   },
   "summary": {
-    "published": 135,
-    "graded": 0,
+    "published": 138,
+    "graded": 3,
     "pending": 3,
     "wins": 0,
-    "losses": 0,
-    "units": 0.0,
-    "roi_pct": null
+    "losses": 3,
+    "units": -3.0,
+    "roi_pct": -100.0
   },
   "season": {
-    "bets": 132,
+    "bets": 135,
     "wins": 72,
-    "losses": 60,
-    "units": 42.274,
-    "roi_pct": 32.03
+    "losses": 63,
+    "units": 39.274,
+    "roi_pct": 29.09
   },
   "live": {
-    "bets": 0,
+    "bets": 3,
     "wins": 0,
-    "losses": 0,
-    "units": 0,
-    "roi_pct": null
+    "losses": 3,
+    "units": -3.0,
+    "roi_pct": -100.0
   },
   "simulated_count": 119,
   "picks": [
@@ -2377,10 +2377,10 @@
       "market_prob": 0.3752,
       "edge_pct": 4.47,
       "published_at": "2026-08-18T05:22:40+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": false,
+      "score": "7-6",
+      "profit_units": -1.0,
       "simulated": false
     },
     {
@@ -2395,10 +2395,10 @@
       "market_prob": 0.4357,
       "edge_pct": 4.42,
       "published_at": "2026-08-18T05:22:40+00:00",
-      "settled": false,
-      "won": null,
-      "score": null,
-      "profit_units": null,
+      "settled": true,
+      "won": false,
+      "score": "1-4",
+      "profit_units": -1.0,
       "simulated": false
     },
     {
@@ -2413,6 +2413,60 @@
       "market_prob": 0.331,
       "edge_pct": 5.95,
       "published_at": "2026-08-18T15:20:15+00:00",
+      "settled": true,
+      "won": false,
+      "score": "4-6",
+      "profit_units": -1.0,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-19",
+      "matchup": "LAD @ COL",
+      "pick": "COL",
+      "pick_full": "Colorado Rockies",
+      "price": 165,
+      "decimal": 2.65,
+      "model_prob": 0.4424,
+      "market_prob": 0.3626,
+      "edge_pct": 7.98,
+      "published_at": "2026-08-19T04:05:09+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-19",
+      "matchup": "AZ @ BOS",
+      "pick": "AZ",
+      "pick_full": "Arizona Diamondbacks",
+      "price": 128,
+      "decimal": 2.28,
+      "model_prob": 0.4725,
+      "market_prob": 0.4236,
+      "edge_pct": 4.89,
+      "published_at": "2026-08-19T04:05:09+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "date": "2026-08-19",
+      "matchup": "MIA @ PHI",
+      "pick": "MIA",
+      "pick_full": "Miami Marlins",
+      "price": 109,
+      "decimal": 2.09,
+      "model_prob": 0.5033,
+      "market_prob": 0.4576,
+      "edge_pct": 4.57,
+      "published_at": "2026-08-19T04:05:09+00:00",
       "settled": false,
       "won": null,
       "score": null,
