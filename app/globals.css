@@ -619,6 +619,16 @@ details.picks > summary:hover { color: var(--white); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+/* The slate's date, subordinate to the heading it sits beside. Smaller and
+   quieter on purpose: it identifies the card, it is not the headline. */
+.today .hdr h3 .cardDate {
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--silver);
+  white-space: nowrap;
+}
 .today .when {
   display: inline-flex;
   align-items: center;

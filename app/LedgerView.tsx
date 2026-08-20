@@ -17,6 +17,41 @@ const PUBLISH_ET = "11:15";
  * day, so it cannot state a time-dependent fact. The copy that renders while
  * this is null is written to be true at any hour.
  */
+function useEtDate(): string | null {
+  const [d, setD] = useState<string | null>(null);
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/New_York",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const tick = () => setD(fmt.format(new Date()));   // YYYY-MM-DD
+    tick();
+    const id = setInterval(tick, 60_000);
+    return () => clearInterval(id);
+  }, []);
+  return d;
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/**
+ * "2026-08-19" -> "Aug 19, 2026".
+ *
+ * Split by hand rather than through `new Date(iso)`, which reads a bare
+ * YYYY-MM-DD as UTC midnight and then renders it in the viewer's zone — so a
+ * reader west of Greenwich would be shown the day BEFORE the one the picks
+ * were placed on. The card's date is the one fact on this block that must
+ * match the picks exactly.
+ */
+function fmtCardDate(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return iso;
+  return `${MONTHS[m - 1]} ${d}, ${y}`;
+}
+
 function useEtClock(): string | null {
   const [t, setT] = useState<string | null>(null);
   useEffect(() => {
@@ -94,6 +129,7 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
   const { data: d, live } = useLive<Ledger>(initial, "/ledger.json");
   const { picks, season, live: liveTot } = d;
   const etNow = useEtClock();
+  const etDate = useEtDate();
   // Before the record run there is nothing to show yet; after it, an empty card
   // means the rule genuinely declined. Those are different facts and the page
   // should not say the second one while the first is true.
@@ -103,6 +139,18 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
   // record because a pending pick is a prediction and a settled one is a
   // result — one table for both reads as a streak.
   const pending = picks.filter((p) => !p.settled);
+  // THE DATE COMES FROM THE PICKS, never from the clock, whenever there are
+  // picks to read it off. A card showing one day's slate under another day's
+  // date is the kind of small wrongness that costs a reader all their trust in
+  // the big numbers further down. Only when the card is empty — nothing has
+  // been published yet, or the rule declined — does it fall back to the ET
+  // date, because then the heading is a statement about today rather than
+  // about a slate. Null before hydration renders nothing at all rather than a
+  // guess.
+  const cardDate =
+    pending.length > 0
+      ? pending.map((p) => p.date).sort().slice(-1)[0]
+      : etDate;
   // One record, one table, no per-row badges. The staked/modelled split is
   // stated once beneath the heading instead — enough for a reader to know what
   // they are looking at, without marking up all 118 rows to say it.
@@ -141,6 +189,9 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
             {pending.length || etNow === null || beforePublish
               ? "Today's card"
               : "No card today"}
+            {cardDate && (
+              <span className="cardDate">{fmtCardDate(cardDate)}</span>
+            )}
           </h3>
           <span className={`when${pending.length ? " livedot" : ""}`}>
             {pending.length
@@ -229,6 +280,86 @@ export default function LedgerView({ initial }: { initial: Ledger }) {
         with no money on them, so the season figure is what the rule returned,
         not what came off a book. Both are broken out below.
       </p>
+
+      {/* Every rule this project has bet under, superseded ones included.
+          When DEC-ML-003 was superseded on 2026-08-18, showing only the open
+          rule would have wiped a live 13-bet record off this page — which is
+          indistinguishable from hiding a losing run, and is the exact opposite
+          of what the promise at the top of this page says. Each rule keeps its
+          own record and its own gate; they are never added together, because a
+          bet placed under one rule is not evidence about another. */}
+      {(d.registrations?.length ?? 0) > 1 && (
+        <>
+          <h2>Registrations</h2>
+          <p className="lede" style={{ fontSize: 14, marginBottom: 18 }}>
+            The rule changed on {d.registration.registered_at.slice(0, 10)}. Each
+            registration keeps its own record below and its own 600-bet gate —
+            they are never pooled, so a closed rule&rsquo;s bets can never be
+            used to shorten a new rule&rsquo;s road to a claim.
+          </p>
+          <div style={{ display: "grid", gap: 12, marginBottom: 28 }}>
+            {d.registrations!.map((r) => (
+              <div
+                key={r.ref}
+                style={{
+                  border: "1px solid rgba(167,169,172,0.28)",
+                  borderRadius: 6,
+                  padding: "14px 16px",
+                  opacity: r.is_current ? 1 : 0.78,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 10,
+                    alignItems: "baseline",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <b style={{ letterSpacing: ".04em" }}>{r.ref}</b>
+                  <span style={{ fontSize: 12, opacity: 0.8 }}>
+                    {r.is_current ? "OPEN — live rule" : "CLOSED — superseded"} ·
+                    registered {r.registered_at.slice(0, 10)}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    marginTop: 8,
+                    fontSize: 14,
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  {r.live.bets === 0 ? (
+                    <>No bets placed under this rule yet.</>
+                  ) : (
+                    <>
+                      {r.live.bets} bet{r.live.bets === 1 ? "" : "s"} ·{" "}
+                      {r.live.wins}&ndash;{r.live.losses} ·{" "}
+                      {fmtUnits(r.live.units)}u ({fmtUsd(r.live.units)}) ·{" "}
+                      {r.live.roi_pct === null
+                        ? "—"
+                        : `${r.live.roi_pct > 0 ? "+" : ""}${r.live.roi_pct}%`}{" "}
+                      ROI
+                    </>
+                  )}
+                </div>
+                <div style={{ marginTop: 6, fontSize: 12, opacity: 0.75 }}>
+                  gate {r.gate.bets_graded}/{r.gate.bets_required} bets ·{" "}
+                  {r.gate.claim_permitted
+                    ? "claim permitted"
+                    : "no performance claim permitted"}
+                </div>
+                {!r.is_current && (
+                  <div style={{ marginTop: 8, fontSize: 12, opacity: 0.75 }}>
+                    {r.status}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <h2>Record</h2>
       <p className="lede" style={{ fontSize: 14, marginBottom: 18 }}>

@@ -28,10 +28,46 @@ export type Pick = {
   published_at: string;
   settled: boolean;
   won: boolean | null;
+  /** win | loss | push. `won` cannot express a push; prefer this when present. */
+  outcome?: "win" | "loss" | "push" | null;
   score: string | null;
   profit_units: number | null;
   /** true = scored after the fact, never staked. */
   simulated: boolean;
+  /** Which registration this bet was placed under. null for simulated rows. */
+  prereg_ref?: string | null;
+};
+
+/**
+ * One registration and its own record.
+ *
+ * Every rule this project has bet under keeps its block here, superseded ones
+ * included. They are never merged: a bet placed under one rule is not evidence
+ * about a different rule, and each carries its own gate for that reason.
+ */
+export type Registration = {
+  ref: string;
+  status: string;
+  is_current: boolean;
+  registered_at: string;
+  rule: string;
+  threshold: string;
+  stake_rule: string;
+  sample_size: string;
+  live: SeasonTot;
+  gate: {
+    bets_required: number;
+    days_required: number;
+    bets_graded: number;
+    /** Wall-time days since this rule was registered, stopping at its
+     *  supersede. This is the quantity the registration gates on. */
+    days_elapsed: number;
+    /** Days this rule actually had a graded bet. Always <= days_elapsed.
+     *  Reported for context; the gate does NOT read it. */
+    days_with_action?: number;
+    met: boolean;
+    claim_permitted: boolean;
+  };
 };
 
 export type Ledger = {
@@ -45,6 +81,8 @@ export type Ledger = {
     stake_rule: string;
     sample_size: string;
   };
+  /** Oldest first. Superseded rules keep their record rather than vanishing. */
+  registrations?: Registration[];
   /** Dated corrections appended to the registration, never edits of it. */
   findings?: {
     date: string;
@@ -56,7 +94,10 @@ export type Ledger = {
     bets_required: number;
     days_required: number;
     bets_graded: number;
+    /** Wall-time days since the CURRENT rule was registered. */
     days_elapsed: number;
+    /** Days the current rule actually had a graded bet. Context only. */
+    days_with_action?: number;
     met: boolean;
     /** The site must not render a performance claim unless this is true. */
     claim_permitted: boolean;
