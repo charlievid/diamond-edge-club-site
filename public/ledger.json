@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T09:19:59+00:00",
+  "generated_at": "2026-08-21T09:39:19+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -105,7 +105,7 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 143,
+    "published": 145,
     "graded": 9,
     "pending": 1,
     "wins": 2,
@@ -114,11 +114,11 @@
     "roi_pct": -53.89
   },
   "season": {
-    "bets": 142,
-    "wins": 74,
-    "losses": 68,
-    "units": 15.01,
-    "roi_pct": 10.57
+    "bets": 144,
+    "wins": 75,
+    "losses": 69,
+    "units": 14.962,
+    "roi_pct": 10.39
   },
   "live": {
     "bets": 9,
@@ -127,7 +127,7 @@
     "units": -4.85,
     "roi_pct": -53.89
   },
-  "simulated_count": 120,
+  "simulated_count": 122,
   "picks": [
     {
       "date": "2026-05-01",
@@ -2279,9 +2279,9 @@
       "pick_full": null,
       "price": 133,
       "decimal": 2.33,
-      "model_prob": 0.4652,
+      "model_prob": 0.4658,
       "market_prob": 0.4183,
-      "edge_pct": 4.69,
+      "edge_pct": 4.75,
       "published_at": null,
       "settled": true,
       "won": true,
@@ -2519,6 +2519,24 @@
       "simulated": false
     },
     {
+      "date": "2026-08-17",
+      "matchup": "DET @ PIT",
+      "pick": "DET",
+      "pick_full": null,
+      "price": -105,
+      "decimal": 1.952,
+      "model_prob": 0.5419,
+      "market_prob": 0.5,
+      "edge_pct": 4.19,
+      "published_at": null,
+      "settled": true,
+      "won": true,
+      "score": "8-5",
+      "outcome": "win",
+      "profit_units": 0.952,
+      "simulated": true
+    },
+    {
       "prereg_ref": "DEC-ML-004",
       "outcome": "loss",
       "date": "2026-08-18",
@@ -2582,9 +2600,9 @@
       "pick_full": null,
       "price": 136,
       "decimal": 2.36,
-      "model_prob": 0.478,
+      "model_prob": 0.4679,
       "market_prob": 0.412,
-      "edge_pct": 6.6,
+      "edge_pct": 5.59,
       "published_at": null,
       "settled": true,
       "won": false,
@@ -2706,6 +2724,24 @@
       "score": "10-9",
       "profit_units": 0.87,
       "simulated": false
+    },
+    {
+      "date": "2026-08-20",
+      "matchup": "ATH @ KC",
+      "pick": "ATH",
+      "pick_full": null,
+      "price": 124,
+      "decimal": 2.24,
+      "model_prob": 0.4764,
+      "market_prob": 0.435,
+      "edge_pct": 4.14,
+      "published_at": null,
+      "settled": true,
+      "won": false,
+      "score": "2-6",
+      "outcome": "loss",
+      "profit_units": -1.0,
+      "simulated": true
     },
     {
       "prereg_ref": "DEC-ML-004",
