@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T07:49:50+00:00",
+  "generated_at": "2026-08-22T08:04:52+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -65,6 +65,12 @@
   ],
   "findings": [
     {
+      "date": "2026-08-22",
+      "corrects": "simulated rows appearing on dates that were bet live",
+      "title": "The page showed bets that were never placed, on days we were betting - including one at a price the rule forbids",
+      "body": "Backtested picks were merged into the ledger alongside live ones so the page could show a season rather than a single row. The de-duplication only skipped a simulated pick that matched a live one exactly on date, matchup and side. That held while every live date carried one pick. It broke as soon as the two rules disagreed about a day we were actually betting. WHAT APPEARED: five simulated rows on dates from 12 August onward, among them ATH @ KC on 20 August, which was never placed, and STL @ PHI at +220 on 21 August - a price DEC-ML-004 explicitly DECLINES, because backtest.json is still generated under DEC-ML-003, whose registered threshold carried no upper cap. So the same page showed a live rule vetoing long prices and a simulated rule taking them, on the same dates. Every row carried the `simulated` flag, but a reader counting rows counts them, and a ledger that adds losses the owner never took is not a ledger. WHAT IT MOVED: the pooled season figure only, from +8.88% to +9.70% ROI - the five rows were net negative, so removing them slightly IMPROVED the number, which is the direction that makes an error easy to miss. WHAT IT DID NOT TOUCH: the live record and the gate. DEC-ML-003 stands at 13 bets and -4.27%, DEC-ML-004 at its own count, both computed from the picks table alone. No live figure ever included a simulated row. FIXED: from the first live pick onward, the record for a date is exactly what was placed that date. Nothing is merged beside it."
+    },
+    {
       "date": "2026-08-20",
       "corrects": "the season ROI shown on this site, and every simulated row's unit size",
       "title": "Simulated picks were published at DOUBLE their real size, and the season ROI with them",
@@ -105,7 +111,7 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 147,
+    "published": 142,
     "graded": 10,
     "pending": 1,
     "wins": 2,
@@ -114,11 +120,11 @@
     "roi_pct": -58.5
   },
   "season": {
-    "bets": 146,
-    "wins": 75,
-    "losses": 71,
-    "units": 12.962,
-    "roi_pct": 8.88
+    "bets": 141,
+    "wins": 73,
+    "losses": 68,
+    "units": 13.68,
+    "roi_pct": 9.7
   },
   "live": {
     "bets": 10,
@@ -127,7 +133,7 @@
     "units": -5.85,
     "roi_pct": -58.5
   },
-  "simulated_count": 123,
+  "simulated_count": 118,
   "picks": [
     {
       "date": "2026-05-01",
@@ -2273,24 +2279,6 @@
       "simulated": false
     },
     {
-      "date": "2026-08-13",
-      "matchup": "TEX @ LAA",
-      "pick": "LAA",
-      "pick_full": null,
-      "price": 133,
-      "decimal": 2.33,
-      "model_prob": 0.4658,
-      "market_prob": 0.4183,
-      "edge_pct": 4.75,
-      "published_at": null,
-      "settled": true,
-      "won": true,
-      "score": "0-7",
-      "outcome": "win",
-      "profit_units": 1.33,
-      "simulated": true
-    },
-    {
       "prereg_ref": "DEC-ML-003",
       "outcome": "loss",
       "date": "2026-08-14",
@@ -2519,24 +2507,6 @@
       "simulated": false
     },
     {
-      "date": "2026-08-17",
-      "matchup": "DET @ PIT",
-      "pick": "DET",
-      "pick_full": null,
-      "price": -105,
-      "decimal": 1.952,
-      "model_prob": 0.5418,
-      "market_prob": 0.5,
-      "edge_pct": 4.18,
-      "published_at": null,
-      "settled": true,
-      "won": true,
-      "score": "8-5",
-      "outcome": "win",
-      "profit_units": 0.952,
-      "simulated": true
-    },
-    {
       "prereg_ref": "DEC-ML-004",
       "outcome": "loss",
       "date": "2026-08-18",
@@ -2592,24 +2562,6 @@
       "score": "4-6",
       "profit_units": -1.0,
       "simulated": false
-    },
-    {
-      "date": "2026-08-18",
-      "matchup": "ATH @ KC",
-      "pick": "ATH",
-      "pick_full": null,
-      "price": 136,
-      "decimal": 2.36,
-      "model_prob": 0.4676,
-      "market_prob": 0.412,
-      "edge_pct": 5.56,
-      "published_at": null,
-      "settled": true,
-      "won": false,
-      "score": "3-4",
-      "outcome": "loss",
-      "profit_units": -1.0,
-      "simulated": true
     },
     {
       "prereg_ref": "DEC-ML-004",
@@ -2726,24 +2678,6 @@
       "simulated": false
     },
     {
-      "date": "2026-08-20",
-      "matchup": "ATH @ KC",
-      "pick": "ATH",
-      "pick_full": null,
-      "price": 124,
-      "decimal": 2.24,
-      "model_prob": 0.4761,
-      "market_prob": 0.435,
-      "edge_pct": 4.11,
-      "published_at": null,
-      "settled": true,
-      "won": false,
-      "score": "2-6",
-      "outcome": "loss",
-      "profit_units": -1.0,
-      "simulated": true
-    },
-    {
       "prereg_ref": "DEC-ML-004",
       "outcome": "loss",
       "date": "2026-08-21",
@@ -2761,24 +2695,6 @@
       "score": "4-6",
       "profit_units": -1.0,
       "simulated": false
-    },
-    {
-      "date": "2026-08-21",
-      "matchup": "STL @ PHI",
-      "pick": "STL",
-      "pick_full": null,
-      "price": 220,
-      "decimal": 3.2,
-      "model_prob": 0.3502,
-      "market_prob": 0.3044,
-      "edge_pct": 4.59,
-      "published_at": null,
-      "settled": true,
-      "won": false,
-      "score": "6-7",
-      "outcome": "loss",
-      "profit_units": -1.0,
-      "simulated": true
     },
     {
       "prereg_ref": "DEC-ML-004",
