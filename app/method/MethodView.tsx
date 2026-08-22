@@ -14,7 +14,7 @@ import { useLive } from "@/lib/useLive";
  */
 export default function MethodView({ initial }: { initial: Ledger }) {
   const { data } = useLive<Ledger>(initial, "/ledger.json");
-  const { registration: r, gate, findings, picks } = data;
+  const { registration: r, gate, findings, picks, market_trust } = data;
 
   // First staked pick, read from the data rather than written down, so the date
   // cannot drift away from the record it describes.
@@ -85,6 +85,61 @@ export default function MethodView({ initial }: { initial: Ledger }) {
               <p>{f.body}</p>
             </div>
           ))}
+        </>
+      )}
+
+      {market_trust && market_trust.length > 1 && (
+        <>
+          <h2>How far the model trusts the price</h2>
+          <p className="lede" style={{ fontSize: 15, marginBottom: 14 }}>
+            The rule above says the de-vigged market probability is entered
+            &ldquo;directly and unscaled&rdquo;. In the fitted model it is not.
+            The L2 penalty applies to the market term along with everything
+            else, so its weight lands <b>below 1</b> &mdash; the model disagrees
+            with every price, pulling long ones toward even money. That
+            disagreement, not the twenty factors, is where most of the measured
+            edge comes from: re-fitting 2022&ndash;2026 with the weight pinned
+            at 1.0 takes the walk-forward from <b>+10.44%</b> to <b>+2.59%</b>.
+          </p>
+          <p className="lede" style={{ fontSize: 15, marginBottom: 14 }}>
+            It is not a chosen number, and it does not hold still. The
+            penalty&rsquo;s grip weakens as the fit set grows, so the weight
+            climbs &mdash; and on the same walk-forward, higher earns less
+            (0.55 returned +10.59%, 1.0 returned +2.59%). Unpenalised it fits
+            at 0.89, which is where it is heading. It is published here, month
+            by month, so the drift is visible while it happens rather than
+            inferred later from a losing run. It is not pinned, and it changes
+            no pick.
+          </p>
+          <div style={{ overflowX: "auto" }}>
+            <table className="trust">
+              <thead>
+                <tr>
+                  <th>Refit</th>
+                  <th>Games fit on</th>
+                  <th>Trust in price</th>
+                  <th>Threshold</th>
+                </tr>
+              </thead>
+              <tbody>
+                {market_trust.map((m) => (
+                  <tr key={m.month}>
+                    <td>{m.month}</td>
+                    <td>{m.fit_rows.toLocaleString()}</td>
+                    <td>{m.market_coef.toFixed(3)}</td>
+                    <td>{(m.threshold * 100).toFixed(2)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="lede" style={{ fontSize: 15, marginTop: 14 }}>
+            Stated plainly, because it is the least flattering way to read the
+            record and it is also the most accurate: on prediction accuracy the
+            market beats every version of this model. The edge has never come
+            from forecasting baseball better than the bookmakers. It comes from
+            leaning against how they price the extremes.
+          </p>
         </>
       )}
 

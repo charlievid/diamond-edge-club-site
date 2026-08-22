@@ -903,3 +903,21 @@ footer.site .fine { max-width: 74ch; margin-top: 30px; font-size: 12px; opacity:
     transition-duration: 0.001ms !important;
   }
 }
+
+/* --- monthly refit: how far the model trusts the price ------------------- */
+.trust { width: 100%; border-collapse: collapse; font-size: 14px; }
+.trust th, .trust td {
+  text-align: right;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.trust th:first-child, .trust td:first-child { text-align: left; }
+.trust th {
+  color: var(--silver);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.trust tbody tr:last-child td { border-bottom: none; font-weight: 700; }
