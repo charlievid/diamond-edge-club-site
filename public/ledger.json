@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T08:09:36+00:00",
+  "generated_at": "2026-08-22T09:23:14+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -99,6 +99,176 @@
       "corrects": "known weakness (c)",
       "title": "The 2012-2021 failure was not about missing Statcast",
       "body": "Weakness (c) said the pre-2022 losses could not be separated into 'the approach fails in that era' versus 'the approach needs Statcast'. Statcast has since been backfilled to 2015 (4.5M pitches) and the question is answered: running the FULL 20-factor model on 2017-2021 returned +0.13% over 1,454 bets (CI90 -5.15% to +5.44%, margin -0.06 points). The 11-factor version scored +1.71% on the same window - marginally BETTER. Statcast did not rescue the old era. So roughly 4,000 bets before 2022 say nothing, while roughly 950 from 2023 on say a lot, and the honest reading is either that something about 2022-onward genuinely differs, or that the recent window is where the rule was searched and it is fitted to it. This is recorded rather than filed as a supersede because the RULE is unchanged; only a factual statement inside it is now answered."
+    }
+  ],
+  "market_trust": [
+    {
+      "month": "2022-06",
+      "market_coef": 0.2027,
+      "intercept": -0.271,
+      "threshold": 0.0633,
+      "fit_rows": 563
+    },
+    {
+      "month": "2022-07",
+      "market_coef": 0.2055,
+      "intercept": -0.289,
+      "threshold": 0.0514,
+      "fit_rows": 1024
+    },
+    {
+      "month": "2022-08",
+      "market_coef": 0.1795,
+      "intercept": -0.2571,
+      "threshold": 0.0619,
+      "fit_rows": 1477
+    },
+    {
+      "month": "2022-09",
+      "market_coef": 0.2989,
+      "intercept": -0.2322,
+      "threshold": 0.0511,
+      "fit_rows": 1937
+    },
+    {
+      "month": "2022-10",
+      "market_coef": 0.3962,
+      "intercept": -0.2262,
+      "threshold": 0.0464,
+      "fit_rows": 2384
+    },
+    {
+      "month": "2023-05",
+      "market_coef": 0.4759,
+      "intercept": -0.206,
+      "threshold": 0.0402,
+      "fit_rows": 2699
+    },
+    {
+      "month": "2023-06",
+      "market_coef": 0.5075,
+      "intercept": -0.1582,
+      "threshold": 0.0497,
+      "fit_rows": 3204
+    },
+    {
+      "month": "2023-07",
+      "market_coef": 0.5561,
+      "intercept": -0.1391,
+      "threshold": 0.0433,
+      "fit_rows": 3674
+    },
+    {
+      "month": "2023-08",
+      "market_coef": 0.5801,
+      "intercept": -0.1184,
+      "threshold": 0.0447,
+      "fit_rows": 4134
+    },
+    {
+      "month": "2023-09",
+      "market_coef": 0.5658,
+      "intercept": -0.1244,
+      "threshold": 0.0393,
+      "fit_rows": 4614
+    },
+    {
+      "month": "2023-10",
+      "market_coef": 0.555,
+      "intercept": -0.1244,
+      "threshold": 0.04,
+      "fit_rows": 5092
+    },
+    {
+      "month": "2024-05",
+      "market_coef": 0.5894,
+      "intercept": -0.1122,
+      "threshold": 0.0415,
+      "fit_rows": 5396
+    },
+    {
+      "month": "2024-06",
+      "market_coef": 0.572,
+      "intercept": -0.1104,
+      "threshold": 0.0444,
+      "fit_rows": 5904
+    },
+    {
+      "month": "2024-07",
+      "market_coef": 0.5816,
+      "intercept": -0.112,
+      "threshold": 0.0434,
+      "fit_rows": 6418
+    },
+    {
+      "month": "2024-08",
+      "market_coef": 0.6146,
+      "intercept": -0.0945,
+      "threshold": 0.043,
+      "fit_rows": 6862
+    },
+    {
+      "month": "2024-09",
+      "market_coef": 0.6542,
+      "intercept": -0.0888,
+      "threshold": 0.0388,
+      "fit_rows": 7379
+    },
+    {
+      "month": "2025-05",
+      "market_coef": 0.6992,
+      "intercept": -0.0811,
+      "threshold": 0.0362,
+      "fit_rows": 8097
+    },
+    {
+      "month": "2025-06",
+      "market_coef": 0.7039,
+      "intercept": -0.073,
+      "threshold": 0.0378,
+      "fit_rows": 8566
+    },
+    {
+      "month": "2025-07",
+      "market_coef": 0.6891,
+      "intercept": -0.0718,
+      "threshold": 0.0387,
+      "fit_rows": 9010
+    },
+    {
+      "month": "2025-08",
+      "market_coef": 0.6676,
+      "intercept": -0.0705,
+      "threshold": 0.0423,
+      "fit_rows": 9411
+    },
+    {
+      "month": "2026-05",
+      "market_coef": 0.6861,
+      "intercept": -0.0637,
+      "threshold": 0.0427,
+      "fit_rows": 9871
+    },
+    {
+      "month": "2026-06",
+      "market_coef": 0.6863,
+      "intercept": -0.0646,
+      "threshold": 0.0416,
+      "fit_rows": 10333
+    },
+    {
+      "month": "2026-07",
+      "market_coef": 0.6874,
+      "intercept": -0.06,
+      "threshold": 0.0412,
+      "fit_rows": 10703
+    },
+    {
+      "month": "2026-08",
+      "market_coef": 0.7068,
+      "intercept": -0.0584,
+      "threshold": 0.0397,
+      "fit_rows": 11022
     }
   ],
   "gate": {

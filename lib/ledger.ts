@@ -83,6 +83,18 @@ export type Ledger = {
   };
   /** Oldest first. Superseded rules keep their record rather than vanishing. */
   registrations?: Registration[];
+  /** One row per monthly refit, oldest first.
+   *  `market_coef` is the fitted weight on the de-vigged market logit. 1.0
+   *  would mean the price is trusted exactly; below 1 the model disagrees
+   *  with every price, and that disagreement carries most of the edge.
+   *  It climbs as `fit_rows` grows, and higher has measured worse. */
+  market_trust?: {
+    month: string;
+    market_coef: number;
+    intercept: number;
+    threshold: number;
+    fit_rows: number;
+  }[];
   /** Dated corrections appended to the registration, never edits of it. */
   findings?: {
     date: string;
