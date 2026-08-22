@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T08:04:52+00:00",
+  "generated_at": "2026-08-22T08:09:36+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -111,9 +111,9 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 142,
+    "published": 143,
     "graded": 10,
-    "pending": 1,
+    "pending": 2,
     "wins": 2,
     "losses": 8,
     "units": -5.85,
@@ -2709,6 +2709,25 @@
       "market_prob": 0.4365,
       "edge_pct": 7.16,
       "published_at": "2026-08-22T07:33:59+00:00",
+      "settled": false,
+      "won": null,
+      "score": null,
+      "profit_units": null,
+      "simulated": false
+    },
+    {
+      "prereg_ref": "DEC-ML-004",
+      "outcome": null,
+      "date": "2026-08-22",
+      "matchup": "SF @ BOS",
+      "pick": "SF",
+      "pick_full": "San Francisco Giants",
+      "price": 177,
+      "decimal": 2.77,
+      "model_prob": 0.3875,
+      "market_prob": 0.3477,
+      "edge_pct": 3.99,
+      "published_at": "2026-08-22T08:09:01+00:00",
       "settled": false,
       "won": null,
       "score": null,
