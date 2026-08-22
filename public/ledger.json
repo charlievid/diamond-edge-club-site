@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T07:35:08+00:00",
+  "generated_at": "2026-08-22T07:49:50+00:00",
   "registration": {
     "ref": "DEC-ML-004",
     "status": "open",
@@ -105,7 +105,7 @@
     "claim_permitted": false
   },
   "summary": {
-    "published": 146,
+    "published": 147,
     "graded": 10,
     "pending": 1,
     "wins": 2,
@@ -114,11 +114,11 @@
     "roi_pct": -58.5
   },
   "season": {
-    "bets": 145,
+    "bets": 146,
     "wins": 75,
-    "losses": 70,
-    "units": 13.962,
-    "roi_pct": 9.63
+    "losses": 71,
+    "units": 12.962,
+    "roi_pct": 8.88
   },
   "live": {
     "bets": 10,
@@ -127,7 +127,7 @@
     "units": -5.85,
     "roi_pct": -58.5
   },
-  "simulated_count": 122,
+  "simulated_count": 123,
   "picks": [
     {
       "date": "2026-05-01",
@@ -2525,9 +2525,9 @@
       "pick_full": null,
       "price": -105,
       "decimal": 1.952,
-      "model_prob": 0.5419,
+      "model_prob": 0.5418,
       "market_prob": 0.5,
-      "edge_pct": 4.19,
+      "edge_pct": 4.18,
       "published_at": null,
       "settled": true,
       "won": true,
@@ -2600,9 +2600,9 @@
       "pick_full": null,
       "price": 136,
       "decimal": 2.36,
-      "model_prob": 0.4679,
+      "model_prob": 0.4676,
       "market_prob": 0.412,
-      "edge_pct": 5.59,
+      "edge_pct": 5.56,
       "published_at": null,
       "settled": true,
       "won": false,
@@ -2732,9 +2732,9 @@
       "pick_full": null,
       "price": 124,
       "decimal": 2.24,
-      "model_prob": 0.4764,
+      "model_prob": 0.4761,
       "market_prob": 0.435,
-      "edge_pct": 4.14,
+      "edge_pct": 4.11,
       "published_at": null,
       "settled": true,
       "won": false,
@@ -2761,6 +2761,24 @@
       "score": "4-6",
       "profit_units": -1.0,
       "simulated": false
+    },
+    {
+      "date": "2026-08-21",
+      "matchup": "STL @ PHI",
+      "pick": "STL",
+      "pick_full": null,
+      "price": 220,
+      "decimal": 3.2,
+      "model_prob": 0.3502,
+      "market_prob": 0.3044,
+      "edge_pct": 4.59,
+      "published_at": null,
+      "settled": true,
+      "won": false,
+      "score": "6-7",
+      "outcome": "loss",
+      "profit_units": -1.0,
+      "simulated": true
     },
     {
       "prereg_ref": "DEC-ML-004",
